@@ -1,0 +1,108 @@
+function insert_purchase_data()
+    {
+      $p_id = $this->input->post('prod_id');
+      $s_q = $this->input->post('stock_weapon_no');
+      $n_q = $this->input->post('qnty');
+      $new_total = $s_q+$n_q;
+      $prod_data = array(
+              'p_quantity'=>$new_total
+        );
+
+        if( !empty($prod_data) )
+        {
+          $this->db->where('p_id',$p_id);
+          $this->db->update('product',$prod_data);
+        }
+
+//----------------- END Updation of Product table ---------------------//
+     for ($n_q=0; $n_q < ; $n_q++) { 
+       # code...
+     }
+        $w_no = $this->input->post('wea_no');
+        if($w_no == '')
+        {
+          $w_no='';
+        }
+        $purchase_data = array(
+            'p_id'             => $p_id,
+            'par_weapon_no'    => $w_no,
+            'Per_id'           => $this->input->post('per_id'),
+            'p_quantity'       => $n_q,
+            'par_price'        => $this->input->post('pur_price'),
+            'sale_price'       => $this->input->post('sal_price'),
+            'remarks'          => $this->input->post('remarks'),
+            'par_date'         => date('Y-m-d')
+          );
+        // echo '<pre>';print_r($purchase_data);die;
+        if(!empty($purchase_data)  )
+        {
+          $pur_insert = $this->db->insert('purchase',$purchase_data);
+          if($pur_insert){
+            return 1;
+          }else{
+            return 0;
+          }
+        }
+    }
+//-----------------------Insert New Customer And Purchase----------------------//
+
+    function insert_new_purchase_customer()
+    {
+        $p_id = $this->input->post('prod_id');
+        $s_q = $this->input->post('stock_weapon_no');
+        $n_q = $this->input->post('qnty');
+        $new_total = $s_q+$n_q;
+        $prod_data = array(
+                'p_quantity'=>$new_total
+          );
+
+          if( !empty($prod_data) )
+          {
+            $this->db->where('p_id',$p_id);
+          $prod_update = $this->db->update('product',$prod_data);
+            
+          }
+//---------------------------- Insert in Person table ----------------------//
+          $per_data = array(
+              'Per_name'  =>$this->input->post('per_name'),
+              'Per_cnic'  =>$this->input->post('per_cnic'),
+              'Per_number' =>$this->input->post('per_number'),
+              'Per_address' =>$this->input->post('per_address'),
+              'Per_license_no'=>$this->input->post('license_no'),
+              'purchase_from'  =>$this->input->post('purchase_from'),
+              'Per_type'    =>'p'
+            );
+           if( !empty($per_data) )
+           {
+            $insert_per = $this->db->insert('person',$per_data);
+              $per_id = $this->db->insert_id();
+              
+           } 
+          // echo '<pre>';print_r($per_data);die;
+//---------------------------- Inserted Purchase Data ------------------///
+          $w_no = $this->input->post('wea_no');
+          if($w_no == '')
+          {
+
+            $w_no='';
+          }
+          $purchase_data = array(
+              'p_id'             => $p_id,
+              'par_weapon_no'    => $w_no,
+              'Per_id'           => $per_id,
+              'p_quantity'       => $n_q,
+              'par_price'        => $this->input->post('pur_price'),
+              'sale_price'       => $this->input->post('sal_price'),
+              'remarks'          => $this->input->post('remarks'),
+              'par_date'         => date('Y-m-d')
+            );
+          // echo '<pre>';print_r($purchase_data);die;
+          if( !empty($purchase_data) )
+          {
+            $pur_insert = $this->db->insert('purchase',$purchase_data); 
+            return 1; 
+          }
+    
+
+    }
+//----------------- END Updation of Product table ---------------------//
