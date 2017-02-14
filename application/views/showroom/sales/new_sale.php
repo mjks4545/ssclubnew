@@ -26,13 +26,13 @@
                              <div class="col-md-12">
                                  <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Name</label>
-                                     <input type="text" name="name" class="form-control" maxlength="50" minlength="1" placeholder="Name" required/>
+                                     <input type="text" name="name" class="form-control" maxlength="50" placeholder="Name" required/>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
 								 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Cnic</label>
-                                     <input type="text" name="cnic" class="form-control"  minlength="13" maxlength="13" pattern="(?=.*\d).{13,16}" maxlength="13"  placeholder="Cnic" required/>
+                                     <input type="text" name="cnic" value="<?=$nic?>" class="form-control" maxlength="13"  placeholder="Cnic" required/>
                                      <input type="hidden" name="p_id" id="p_id" />
                                      <input type="hidden" name="par_price" id="par_price" />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
@@ -42,13 +42,13 @@
                              <div class="col-md-12">
                                 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Mobile</label>
-                                     <input type="text" name="number" pattern="(?=.*\d).{11,16}" minlength="11" maxlength="16" class="form-control" placeholder="Mobile" required />
+                                     <input type="text" name="number" class="form-control" placeholder="Mobile" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
 								 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Address</label>
-                                     <input type="text" name="address"  maxlength="200" minlength="1"   class="form-control" placeholder="Address" required />
+                                     <input type="text" name="address"  maxlength="200" class="form-control" placeholder="Address" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -56,15 +56,14 @@
 							  <div class="col-md-12">
                                 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Product</label>
-                                     <select type="text" name="product_name" id="product_main" class="form-control" minlength="1" maxlength="50" id="exampleInputEmail1" required>
-                                     <option>Select Option</option>
-                                        <option value="Acessories">Acessories</option>
-                                        <option value="Ammunition">Ammunition</option>
-                                        <option value="Pistol">Pistol</option>
-                                        <option value="Rifle">Rifle</option>
-                                        <option value="Shortgun">Shortgun</option>
-                                        <option value="Air Rifle">Air Rifle</option>
-                                     </select>
+                                     <select name="product_name" id="product_main" class="form-control">
+                                     <option value="">Select</option>
+                                     <?php 
+                                     if(isset($product)){
+                                        foreach ($product as  $value) {?>
+                                     <option value="<?= $value?>"><?= $value?></option>
+                                     <?php }}?>?>   
+                                     </select>                                     
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -102,16 +101,16 @@
 							<div class="col-md-12">
 							<div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">License Number</label>
-                                     <input type="text" name="l_no" minlength="1" maxlength="10"  class="form-control" value="<?php if(isset($search_data)){ echo $search_data[0]->Per_license_no; } ?>" placeholder="Enter license Number" required />
+                                     <input type="text" name="l_no" class="form-control" value="<?php if(isset($search_data)){ echo $search_data[0]->Per_license_no; } ?>" placeholder="Enter license Number" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
                                  <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Weapon Number</label>
                                   <div class="form-group has-feedback form-inline">
-                                    <input type="text" name="weapon_no_1" class="form-control"  id="weapon_no_1" placeholder="Weapon Number" style="width:90%" required/>
+                                    <input type="text" name="weapon_no_1" class="form-control"  id="weapon_no_1" placeholder="Weapon Number" style="width:90%" />
                                     <span class="add_field_span">
-                                    <button class="add_field_button btn-sm btn btn-info" style="width:8%"><i class="fa fa-plus"></i></button>
+                                    <button class="add_field_button btn-sm btn btn-info" style="width:8%" disabled=""><i class="fa fa-plus"></i></button>
                                     </span>
                                         
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
@@ -122,7 +121,7 @@
 							 <div class="col-md-12">
                                 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Membership</label>
-                                     <select type="text" name="m_type" class="form-control" minlength="1" maxlength="50" id="exampleInputEmail1" required>
+                                     <select type="text" name="m_type" class="form-control" maxlength="50" required>
 									  <option>Select Membership</option>
                                      
 									  <option value="Silver">Silver</option>
@@ -140,13 +139,13 @@
 							<div class="col-md-12">
                                 <div class="form-group has-feedback col-md-2">
                                      <label for="exampleInputEmail1">Date</label>
-                                      <input type="date" name="sale_date"  class="form-control" required />
+                                      <input type="date" name="sale_date" value="<?=date("Y-m-d")?>" class="form-control" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
 								 <div class="form-group has-feedback col-md-3">
                                      <label >Quantity</label>
-                                     <input type="text" name="quantity" id="quantity" minlength="1" maxlength="20"  class="form-control" placeholder="Quantity" required />
+                                     <input type="text" name="quantity" id="quantity"  maxlength="20"  class="form-control" placeholder="Quantity" required />
                                      <p style="color:green;display:none;" id="instock">In Stock</p>
                                      <p style="color:red;display:none;" id="outstock">Sorry out of stock</p>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
@@ -154,18 +153,18 @@
                                  </div>
 								 <div class="form-group has-feedback col-md-2">
                                      <label for="exampleInputEmail1">Rate</label>
-                                     <input type="text" name="rate" id="rate" minlength="1" maxlength="20"  class="form-control" id="exampleInputEmail1" placeholder="Rate" required />
+                                     <input type="text" name="rate" id="rate" maxlength="20"  class="form-control" id="exampleInputEmail1" placeholder="Rate" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
 								 <div class="form-group has-feedback col-md-2">
                                      <label for="exampleInputEmail1">Total</label>
-                                     <input type="text" name="total" id="total" pattern="(?=.*\d).{1,15}" minlength="1" maxlength="100"  class="form-control" id="exampleInputEmail1" placeholder="Total" required />
+                                     <input type="text" name="total" id="total" class="form-control" placeholder="Total" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
 								  <div class="form-group has-feedback col-md-3">
-                                     <label for="exampleInputEmail1">Details</label>
+                                     <label>Details</label>
                                      <input type="text" name="details" class="form-control" placeholder="Details"/>
                                  </div>
 							    
@@ -196,15 +195,17 @@
 
 $(function(){
 
- $("#product_main").change(function(){
+$('body').on('change','#product_main',function(){
+ /*$("#product_main").change(function(){*/
      var prod_cat = this.value;
-       if(prod_cat =='Acessories' || prod_cat =='Ammunition' || prod_cat=='Air Rifle' )
+     // alert(prod_cat);
+       if(prod_cat =='Pistol' || prod_cat =='Shortgun' || prod_cat=='Rifle' )
        {
+        $("#weapon_no_1").removeAttr("disabled","");
+        $(".add_field_button").removeAttr("disabled","");
+       }else if(prod_cat !='Pistol' || prod_cat !='Shortgun' || prod_cat!='Rifle'){
         $("#weapon_no_1").attr("disabled","");
         $(".add_field_button").attr("disabled","");
-       }else{
-        $("#weapon_no_1").removeAttr("disabled");
-        $(".add_field_button").removeAttr("disabled");
        }  
 
 
@@ -254,13 +255,14 @@ $("#prod_model").change(function(){
         data:{product:product,type:type,model:model},
         success:function( data )
         {
-            // alert(data.p_quantity);
+            // alert(data.sale_price);
             // console.log(data);
           $("#par_price").val( data.par_price );
           $("#p_id").val( data.p_id );
           $("#pr_code").val(data.p_code);
           $("#stock_weapon_no").val(data.p_quantity);
           $("#prod_id").val(data.p_id);      
+          $("#rate").val(data.sale_price);
         }
     });
 });
@@ -277,14 +279,14 @@ $("#pr_code").keyup(function(){
         success:function( data )
         {
          // alert(data);
-         if(data.p_name =='Acessories' || data.p_name =='Ammunition' || data.p_name=='Air Rifle' )
-       {
-        $("#weapon_no_1").attr("disabled","");
-        $(".add_field_button").attr("disabled","");
-       }else{
-        $("#weapon_no_1").removeAttr("disabled");
-        $(".add_field_button").removeAttr("disabled");
-       }
+         if(data.p_name =='Pistol' || data.p_name =='Shortgun' || data.p_name=='Rifle' )
+           {
+            $("#weapon_no_1").removeAttr("disabled","");
+            $(".add_field_button").removeAttr("disabled","");
+           }else{
+            $("#weapon_no_1").attr("disabled","");
+            $(".add_field_button").attr("disabled","");
+           }
             $("#par_price").val( data.par_price );
             $("#p_id").val( data.p_id );
             $("#product_main").val(data.p_name);
@@ -348,38 +350,6 @@ $("#quantity").keyup(function(){
     })
 });
 });
-
-// ----------------------- Check values in stock --------------------------//
-
-$(document).ready(function(){
-    $("#quantity").keyup(function(){
-        var qnty = $("#quantity").val();
-        var p_id = $("#p_id").val();
-        $.ajax({
-        url:"<?= site_url('Showroom/check_stock_values') ?>",
-        type:"POST",
-        data:{qnty:qnty, p_id:p_id },
-        success:function( e )
-        {
-            // alert(e);
-              if(e=='yes')
-                {
-                    $("#instock").show();
-                    $("#outstock").hide();
-                    $("#save_btn").removeAttr("disabled","");
-                }
-                if(e=='no'){
-                    $("#outstock").show();
-                    $("#instock").hide();
-                    $("#save_btn").attr("disabled","");
-                }
-        }
-        });
-    });
-});
-
-
-
 
 
 </script>

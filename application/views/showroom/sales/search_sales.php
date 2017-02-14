@@ -25,7 +25,7 @@
                                     <form role="form"  action="<?php echo site_url() ?>sale/search_by_nic" method="post">
                                         <div class="form-group has-feedback">
                                             <label for="exampleInputEmail1">Enter NIC Number</label>
-                                            <input name="nic_no" id="nic" class="form-control" placeholder="Enter NIC number" required maxlength="50"/>
+                                            <input name="nic_no" id="nic_search_sale" class="form-control" required maxlength="50"/>
                                             
                                         </div>
                                          <button type="submit" class="btn btn-success pull-right">

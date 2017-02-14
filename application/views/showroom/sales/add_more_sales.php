@@ -30,21 +30,20 @@ ll{
                          <!---<a href="<?= site_url()?>member/" class="pull-right"> Back</a>->
                      </div><! /.box-header -->
                      <!-- form start -->
-                     <form role="form" data-toggle="validator" action="<?= site_url('sale/add_sale/')?>" method="post">
+                     <form role="form" data-toggle="validator" action="<?= site_url('sale/insert_sale_data/'.$this->uri->segment(3).'/'.$this->uri->segment(4) )?>" method="post">
                          <div class="box-body">
                             <div class="col-md-12">
                                  
 								 <div class="form-group has-feedback col-md-3">
                                     <label for="exampleInputEmail1">Product</label>
-                                     <select type="text" name="product_name" id="product_main" class="form-control" minlength="1" maxlength="50" id="exampleInputEmail1" required>
-                                        <option>Select Option</option>
-                                        <option value="Acessories">Acessories</option>
-                                        <option value="Ammunition">Ammunition</option>
-                                        <option value="Pistol">Pistol</option>
-                                        <option value="Rifle">Rifle</option>
-                                        <option value="Shortgun">Shortgun</option>
-                                        <option value="Air Rifle">Air Rifle</option>
-                                     </select>
+                                     <select name="product_name" id="product_main" class="form-control" required>
+                                     <option value="">Select</option>
+                                     <?php 
+                                     if(isset($product)){
+                                        foreach ($product as  $value) {?>
+                                     <option value="<?= $value?>"><?= $value?></option>
+                                     <?php }}?>?>   
+                                    </select>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -67,7 +66,7 @@ ll{
 
                                 <div class="form-group has-feedback col-md-3">
                                     <label for="exampleInputEmail1">Prd code</label>
-                                     <input type="text" name="pr_code"  class="form-control"  id="pr_code" placeholder="Product code" required />
+                                     <input type="text" name="pr_code"  class="form-control"  id="pr_code" required />
                                      <input type="hidden" name="p_id" id="p_id"/>
                                      <input type="hidden" name="par_price" id="par_price" />
                                      <input type="hidden" name="per_id" id="per_id" value="<?= $this->uri->segment(3);?>">
@@ -78,14 +77,14 @@ ll{
 
 							 <div class="col-md-12">
                                 <div class="form-group has-feedback col-md-2">
-                                <label for="exampleInputEmail1">Weapon Number</label>
-                                    <input type="text" name="weapon_no_1" class="form-control"  id="weapon_no" placeholder="Weapon Number" required/>
+                                    <label for="exampleInputEmail1">Weapon Number</label>
+                                    <input type="text" name="weapon_no_1" class="form-control"  id="weapon_no" />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
                                  <div class="form-group has-feedback col-md-3">
                                      <label >Quantity</label>
-                                     <input type="text" name="quantity" id="quantity" minlength="1" maxlength="20"  class="form-control" placeholder="Quantity" required />
+                                     <input type="text" name="quantity" id="quantity" minlength="1" maxlength="20"  class="form-control" required />
                                      <p style="color:green;display:none;" id="instock">In Stock</p>
                                      <p style="color:red;display:none;" id="outstock">Sorry out of stock</p>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
@@ -93,19 +92,19 @@ ll{
                                  </div>
                                  <div class="form-group has-feedback col-md-2">
                                      <label for="exampleInputEmail1">Rate</label>
-                                     <input type="text" name="rate" id="rate" minlength="1" maxlength="20"  class="form-control" id="exampleInputEmail1" placeholder="Rate" required />
+                                     <input type="text" name="rate" id="rate" minlength="1" maxlength="20"  class="form-control" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
                                  <div class="form-group has-feedback col-md-2">
                                      <label for="exampleInputEmail1">Total</label>
-                                     <input type="text" name="total" id="total" pattern="(?=.*\d).{1,15}" minlength="1" maxlength="100"  class="form-control" id="exampleInputEmail1" placeholder="Total" required />
+                                     <input type="text" name="total" id="total" pattern="(?=.*\d).{1,15}" minlength="1" maxlength="100"  class="form-control" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
                                   <div class="form-group has-feedback col-md-3">
                                      <label for="">Details</label>
-                                     <input type="text" name="details" class="form-control" placeholder="Details" required />
+                                     <input type="text" name="details" class="form-control" />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -113,25 +112,30 @@ ll{
                             </div>
                         <div class="col-md-12">
                                 <div class="form-group has-feedback col-md-3">
+                                <?php if(!isset($saled_data[0]->s_date)) {?>    
                                 <label for="exampleInputEmail1">Sale date</label>
-                                    <input type="date" name="sale_date" class="form-control" required/>
+                                    <input type="date" name="sale_date" class="form-control" value="<?php echo date('Y-m-d');?>" required/>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
+                                 <?php }else{?>
+                                    <input type="hidden" name="sale_date" class="form-control" value="<?php echo $saled_data[0]->s_date;?>"/>
+                                    <?php }?>
                                  </div>
+
                         </div> 
                                 
 						    </div>
 							<!-- /.box-body -->
                          <div class="box-footer">
-                             <button type="submit" class="btn btn-primary col-sm-1">Save</button>
-							 <a href="<?= site_url('sale/sales_bill/'.$this->uri->segment(3).'/'.$this->uri->segment(4));?>" class="btn btn-primary gbill pull-right  margin-left">Generate Bill</a>
+							 <a href="<?= site_url('sale/sales_bill/'.$this->uri->segment(3).'/'.$this->uri->segment(4));?>" class="btn btn-primary gbill pull-right margin-left col-md-offset-1">Generate Bill</a>
+                             <button type="submit" class="btn btn-primary col-sm-1 pull-right">Save</button>
                          </div> 
                      </form>
                  </div><!-- /.box -->
 				 <!--=================== table =================-->
 				 <div class="box">
-				 <div class="box-body" style="overflow-y:scroll; overflow-x:hidden;height:270px; ">
-                        <table id="example1" class="table table-bordered table-striped">
+				 <div class="box-body" style="overflow-y:scroll; overflow-x:hidden;height:270px;">
+                        <table class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>S.no</th>
@@ -160,17 +164,18 @@ ll{
                                 <td><?= $value->s_quantity?></td>
                                 <td><?= $value->s_weapon_no?></td>
                                 <td><?= $value->s_price?></td>
-                                <td><?= $value->s_total_price?></td>
+                                <td><?= $value->s_quantity * $value->s_price;?></td>
                                 <td>
                                 <?php 
-                                    $total_qnty = $total_qnty + $value->s_quantity;
-                                    $total_rate = $total_rate + $value->s_price;
+                                    $total_qnty =  $total_qnty + $value->s_quantity;
+                                    $total_rate = $value->s_quantity * $value->s_price;
                                 ?>
                                 <a href="<?= site_url('sale/get_data_update/'.$value->s_id.'/'.$value->Per_id.'/'.$this->uri->segment(4) ); ?>" style="color:#9e9e9e;">Edit</a>
-                                <a href="javascript:void(0);" id="delete_sale" style="color:red">Delete</a>
+                                <a href="<?= site_url('sale/delete_sale/'.$value->s_quantity.'/'.$value->s_id.'/'.$value->Per_id.'/'.$this->uri->segment(4) );?>" id="delete_sale" onclick="return confirm('Are you sure you want to delete this?');" style="color:red">Delete</a>
                                 </td>
                                 </tr>
                                 <input type="hidden" name="qnty" id="qnty" value="<?php echo $value->s_quantity?>">
+                                <input type="hidden" name="c_redir_id" id="c_id" value="<?php echo $this->uri->segment(4)?>">
                                 <input type="hidden" name="per_id" id="per_id" value="<?=  $value->Per_id; ?>">
                                 <input type="hidden" name="s_id" id="s_id" value="<?= $value->s_id; ?>">
 							 <?php $sno++; }?>
@@ -183,7 +188,7 @@ ll{
                                  <td></td>
                                  <td><?=$total_qnty;?></td>
                                  <td></td>
-                                 <td><?=$total_rate?></td>
+                                 <td><?php $total_rate?></td>
                                  <td></td>
                                  <td></td>
                              </tr>
@@ -202,13 +207,15 @@ ll{
 
 <script type="text/javascript">
  $(document).ready(function(){
-$('body').on('click','#delete_sale',function(){
+
+/*$('body').on('click','#delete_sale',function(){
    if(confirm('Are you sure you want to delete this')==true )
         {    
         var per_id = $("#per_id").val(); 
         // alert(per_id);exit;
         var qnty = $("#qnty").val();
         var s_id = $("#s_id").val();
+        var c_id = $("#c_id").val();
         $.ajax({
             url: "<?= site_url('sale/delete_sale')?>",
             type: 'POST',
@@ -216,13 +223,13 @@ $('body').on('click','#delete_sale',function(){
             success:function( data )
             {
                 //console.log(data);
-                location.href = "<?= site_url('sale/add_more_sale') ?>"+'/'+per_id;
+                location.href = "<?= site_url('sale/add_more_sale') ?>"+'/'+per_id+'/'+c_id;
             }
         });
         }
         else{
         }
-});
+});*/
 
 
 
@@ -239,13 +246,13 @@ $(function(){
 
  $("#product_main").change(function(){
      var prod_cat = this.value;
-       if(prod_cat =='Acessories' || prod_cat =='Ammunition' || prod_cat=='Air Rifle' )
+       if(prod_cat =='pistol' || prod_cat =='Shortgun' || prod_cat=='Rifle' )
        {
-        $("#weapon_no").attr("disabled","");
-        $(".add_field_button").attr("disabled","");
+        $("#weapon_no").removeAttr("disabled","");
+        $(".add_field_button").removeAttr("disabled","");
        }else{
-        $("#weapon_no").removeAttr("disabled");
-        $(".add_field_button").removeAttr("disabled");
+        $("#weapon_no").attr("disabled");
+        $(".add_field_button").attr("disabled");
        }  
 
 
@@ -295,9 +302,10 @@ $("#prod_model").change(function(){
         data:{product:product,type:type,model:model},
         success:function( data )
         {
-            // alert(data);exit;
+            // alert(data.sale_price);exit;
             // console.log(data);
-          // $("#par_price").val( data.par_price );
+          $("#rate").val(data.sale_price);
+          $("#par_price").val( data.par_price );
           $("#p_id").val( data.p_id );
           $("#pr_code").val(data.p_code);
           $("#stock_weapon_no").val(data.p_quantity);
@@ -310,22 +318,21 @@ $("#prod_model").change(function(){
 
 $("#pr_code").keyup(function(){
     var code = $("#pr_code").val();
-    // alert(code);exit;
     $.ajax({
         url:"<?= site_url('Showroom/get_code_search_data')?>",
         type:'POST',
-        data:{code:code},
-        success:function( data )
+        data:{code:code}, 
+        success:function( data ) 
         {
-         // alert(data);
-         if(data.p_name =='Acessories' || data.p_name =='Ammunition' || data.p_name=='Air Rifle' )
-       {
-        $("#weapon_no").attr("disabled","");
-        $(".add_field_button").attr("disabled","");
-       }else{
-        $("#weapon_no").removeAttr("disabled");
-        $(".add_field_button").removeAttr("disabled");
-       }
+         
+        if(data.p_name =='Pisol' || data.p_name =='Rifle' || data.p_name=='Shortgun' )
+            {
+            $("#weapon_no").removeAttr("disabled","");
+            $(".add_field_button").removeAttr("disabled","");
+           }else{
+            $("#weapon_no").attr("disabled","");
+            $(".add_field_button").attr("disabled","");
+           }
 
             $("#par_price").val( data.par_price );
             $("#p_id").val( data.p_id );    
@@ -373,7 +380,7 @@ $(document).ready(function() {
 $("#quantity").keyup(function(){
 
     var max_fields      = $("#quantity").val(); //maximum input boxes allowed
-    var field_span         = $(".add_field_span"); //Fields wrapper
+    var field_span      = $(".add_field_span"); //Fields wrapper
     var add_button      = $(".add_field_button"); //Add button ID
     
     var x = 1; //initlal text box count

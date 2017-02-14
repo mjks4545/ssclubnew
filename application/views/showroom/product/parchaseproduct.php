@@ -25,8 +25,14 @@
                                 <div class="col-md-6 col-xs-offset-3">
                                     <form role="form" data-toggle="val idator" action="<?php echo site_url() ?>showroom/parchasedetailsearch" method="post">
                                         <div class="form-group has-feedback">
-                                            <label for="exampleInputEmail1">Parchase From</label>
-                                            <input name="company_name" id="name" class="form-control" placeholder="Enter Company name"  maxlength="50" required/>
+                                            <label for="exampleInputEmail1">Name</label>
+                                            <input name="company_name" id="purchase_name_search" class="form-control" />
+                                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                                            <span class="help-block with-errors" style="margin-left:10px; "></span>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <label for="exampleInputEmail1">CNIC</label>
+                                            <input name="cnic" id="purchase_cnic_search" class="form-control" />
                                             <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                             <span class="help-block with-errors" style="margin-left:10px; "></span>
                                         </div>

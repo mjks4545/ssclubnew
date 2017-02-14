@@ -1,4 +1,3 @@
-
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -20,20 +19,19 @@
                         <?php $this->load->view("include/alert"); ?>
                     </div><!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form" data-toggle="val idator" action="<?= site_url()?>showroom/search_product" method="post">
+                    <form role="form" data-toggle="val idator" action="<?= site_url()?>showroom/search_product" method="get">
                         <div class="box-body">
                             <div class="col-md-6 col-sm-offset-3">
                                   <div class="form-group has-feedback">
-                                     <label for="exampleInputEmail1">Product</label>
-                                     <select type="text" name="product_name" id="product_main" class="form-control" minlength="1" maxlength="50" id="exampleInputEmail1" required>
-                                     <option value="">Select Product</option>
-                                        <option value="Acessories">Acessories</option>
-                                        <option value="Ammunition">Ammunition</option>
-                                        <option value="Pistol">Pistol</option>
-                                        <option value="Rifle">Rifle</option>
-                                        <option value="Shortgun">Shortgun</option>
-                                        <option value="Air Rifle">Air Rifle</option>
-                                     </select>
+                                     <label >Product</label>
+                                     <select name="product_name" id="product_main" class="form-control">
+                                     <option value="">Select</option>
+                                     <?php 
+                                     if(isset($product)){
+                                        foreach ($product as  $value) {?>
+                                     <option value="<?= $value?>"><?= $value?></option>
+                                     <?php }}?>?>   
+                                    </select>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -41,7 +39,7 @@
                                  <div class="col-md-6 col-sm-offset-3">
                                   <div class="form-group has-feedback">
                                      <label for="exampleInputEmail1">Product Type</label>
-                                    <select name="prod_type" class="form-control" id="prod_type" required>
+                                    <select name="prod_type" class="form-control" id="prod_type" />
                                        <option value="">Select Type</option>
                                     </select>
                                  </div>
@@ -49,7 +47,7 @@
                                 <div class="col-md-6 col-sm-offset-3">
                                   <div class="form-group has-feedback">
                                      <label for="exampleInputEmail1">Product Model</label>
-                                       <select name="prod_model" class="form-control" id="prod_model" required>
+                                       <select name="prod_model" class="form-control" id="prod_model" >
                                            <option value="">Select Type</option>
                                         </select>
                                  </div>
@@ -57,7 +55,7 @@
                                 <div class="col-md-6 col-sm-offset-3">
                                   <div class="form-group has-feedback">
                                      <label for="exampleInputEmail1">Prd Code</label>
-                                    <input type="text" name="pr_code"  class="form-control"  id="pr_code" placeholder="" required />
+                                    <input type="text" name="pr_code"  class="form-control"  id="pr_code" placeholder="" />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -78,8 +76,8 @@
 
 
 <script type="text/javascript">
-    $(function(){
 
+$(function(){
  $("#product_main").change(function(){
      var prod_cat = this.value;
        if(prod_cat =='Acessories' || prod_cat =='Ammunition' || prod_cat=='Air Rifle' )

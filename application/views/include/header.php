@@ -9,6 +9,8 @@
     <!-- Bootstrap 3.3.5 -->
       <script src="<?=base_url();?>public/plugins/jQuery/jQuery-2.1.4.min.js"></script>
       <script src="<?=base_url();?>public/bootstrap/js/bootstrap.min.js"></script>
+       <script src="<?=base_url();?>public/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="<?=base_url();?>public/plugins/datatables/dataTables.bootstrap.min.js"></script>
       <script src="<?=base_url();?>public/js/custom.js"></script>
       <script src="<?=base_url();?>public/js/fileinput.js"></script>
       <script src="<?=base_url();?>public/js/validator.js"></script>
@@ -52,7 +54,7 @@
         <!-- Logo -->
         <a href="<?php echo site_url()?>admin/" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>A</b>LT</span>
+          <span class="logo-mini"><b>S</b>SC</span>
           <!-- logo for regular state and mobile devices -->
           <span class="logo-lg"><b>SS CLUB</b></span>
         </a>
@@ -64,19 +66,40 @@
           </a>
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo site_url('ssshootingclub/index/')?>">SS Shooting Club</a>
+              </li>
 
+              <li class="nav-item">
+                <a class="nav-link" href="<?php echo site_url('showroom/index')?>">Showroom</a>
+              </li>
+              
               <li class="dropdown user user-menu">
                 <a href="<?php echo base_url('home/logout');?>">
                   <span class="hidden-xs">
-                  <?php if($this->session->userdata('email')){ ?>
-                  Logout
-               <?php }?>
+                    Logout
                   </span>
                 </a>
-                </li>
+              </li>
 
               
             </ul>
           </div>
         </nav>
       </header>
+      <script>
+        $(function () {
+            $("#example1").DataTable({
+                "lengthMenu": [[-1, 10, 25, 50, 100 ], ["All", 10, 25, 50, 100 ]]
+            });
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            });
+        });
+    </script>

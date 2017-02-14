@@ -18,15 +18,23 @@ class Home extends CI_Controller
         $result = $this->main_m->loginpro();
         if($result==0)
         {
-            echo 'status is 0';
+            $this->session->set_flashdata('msg','Email or Password is incorrect!');
+            $this->session->set_flashdata('type','danger');
+            redirect('home/index');
         }
         if($result==1){
             $this->session->set_flashdata('msg','Welcome To SS Shooting Club');
             $this->session->set_flashdata('type','success');
             redirect("admin/index");
         }
-        if($result==2){
-            echo 'data not founded';
-        }
     }
+
+    function logout()
+    {
+       $this->session->sess_destroy();
+       $this->session->set_flashdata('msg','Logout Successfully.');
+       $this->session->set_flashdata('type','success');
+       redirect('home/index');
+    }
+
 }

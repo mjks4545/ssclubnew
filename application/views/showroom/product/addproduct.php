@@ -24,21 +24,14 @@
                             <div class="col-md-12">
                                 <div class="form-group has-feedback col-md-6">
                                     <label for="exampleInputEmail1">Product Name</label>
-                                    <select name="name" class="form-control" required>
-                                        <option selected="selected"  value="">--Select Option--</option>
-                                        <option value="Acessories">Acessories</option>
-                                        <option value="Ammunition">Ammunition</option>
-                                        <option value="Pistol">Pistol</option>
-                                        <option value="Rifle">Rifle</option>
-                                        <option value="Shortgun">Shortgun</option>
-                                        <option value="Air Rifle">Air Rifle</option>
-                                    </select>
+                                    <input type="text" name="name" id="product_name" class="form-control">
+                                    
                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
                                 </div>
                                 <div class="form-group has-feedback col-md-6">
                                     <label for="exampleInputEmail1">Product Type</label>
-                                    <input type="text" name="type" class="form-control" maxlength="50" minlength="1"  placeholder="Enter Type" required/>
+                                    <input type="text" name="type" id="product_type" class="form-control" required/>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
                                 </div>
@@ -46,40 +39,20 @@
                             <div class="col-md-12">
                                 <div class="form-group has-feedback col-md-6">
                                     <label for="exampleInputEmail1">Product Model</label>
-                                    <input type="text" name="model" maxlength="50"  class="form-control" placeholder="Enter Model" required />
+                                    <input type="text" name="model" id="product_model" class="form-control" required />
                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
                                 </div>
                                 <div class="form-group has-feedback col-md-6">
                                     <label for="exampleInputEmail1">Product Code</label>
-                                    <input type="text" name="code"  maxlength="50"  class="form-control" placeholder="Enter Code" required/>
+                                    <input type="text" name="code" id="add_code" class="form-control" required/>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                                    <span class="help-block with-errors" style="margin-left:10px; "></span>
+                                    <span id="p_code_error" class="help-block with-errors" style="margin-left:10px; "></span>
                                 </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <!-- <div class="form-group has-feedback col-md-6">
-                                    <label for="exampleInputEmail1">Product Quantity</label>
-                                    <input type="text" name="quantity"   pattern="(?=.*\d).{1,6}" class="form-control" id="exampleInputEmail1" placeholder="Enter Quantity" required />
-                                    <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                                    <span class="help-block with-errors" style="margin-left:10px; "></span>
-                                </div> 
-                                <div class="form-group has-feedback col-md-6">
-                                    <label>Add product date</label>
-                                    <input type="date"name="add_prod_date" class="form-control">
-                                    <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                                    <span class="help-block with-errors" style="margin-left:10px; "></span>
-                                </div> -->
-                                <!--<div class="form-group has-feedback col-md-6">
-                                    <label>Note</label>
-                                    <textarea name="note" class="form-control" maxlength="250" minlength="1" style="resize: none;height:100px; "  placeholder="Write Some Words" required></textarea>
-                                    <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                                    <span class="help-block with-errors" style="margin-left:10px; "></span>
-                                </div>-->
                             </div>
                         </div><!-- /.box-body -->
                         <div class="box-footer ">
-                            <button type="submit" class="btn btn-primary pull-right" style="margin-right:20px; ">Save</button>
+                            <button type="submit" class="btn btn-primary pull-right add_prod_btn" style="margin-right:20px; ">Save</button>
                         </div>
                     </form>
                 </div><!-- /.box -->

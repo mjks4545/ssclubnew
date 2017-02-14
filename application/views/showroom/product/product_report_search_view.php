@@ -21,13 +21,13 @@
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <?php $this->load->view('include/alert'); ?>
-                        <h2 style="text-align:center;">View Search details</h2>
+                        <h2 style="text-align:center;">Search details For Purchase</h2>
                         
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
                     <div class="box-body">
-                        <table id="example" class="table table-bordered table-striped">
+                        <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>S.no</th>
@@ -40,7 +40,7 @@
                                 <th>Quantity</th>
                                 <th colspan="2">Price</th>
                                 <th colspan="2">Sale Price</th>
-                                <th>Date</th> 
+                                <th style="width:7%;">Date</th> 
                             </tr>
                             </thead>
                             <tbody>
@@ -55,7 +55,7 @@
                                 foreach($s_result as $v){?>
                                 <tr>
                                 <?php 
-                                        $qty = $v->p_quantity;
+                                        $qty = $v->par_quantity;
                                         $price = $v->par_price;
                                         $sale_p = $v->sale_price;
                                  ?>
@@ -69,24 +69,29 @@
                                     <td><?php echo $v->par_weapon_no; ?></td>
                                     <td><?php echo $v->remarks; ?></td>
                                     <td><?php echo $v->p_model; ?></td>
-                                    <td><?php echo $qty;
-                                    $t_qnty = $t_qnty+$qty;?>
+                                    <td> 
+                                    
+                                    <a href="<?= site_url('Showroom/get_purchased_detail/'.$v->p_id.'/'.$v->Per_id.'/'.$v->par_date)?>">
+                                    <?= $qty;?>
+                                    </a>
+
+
+                                    <?php $t_qnty = $t_qnty+$qty; ?>
                                     </td>
                                     <td><?php echo $price;
                                     $t_price = $t_price+$price; ?>
                                     </td>
-                                    <td><?php $totl =( $qty * $price ); echo $totl; 
-                                           $all_price = $all_price+$totl; 
-                                    ?>
+                                    <td><?php echo $totl =( $qty * $price ); 
+                                           $all_price = $all_price+$totl;  ?>
                                     </td>
                                     <td><?= $v->sale_price;
                                     $sale_price = $v->sale_price +$sale_price; ?>
                                     </td>
-                                    <td><?php $total_s =($qty * $sale_p); echo $total_s;
+                                    <td><?php echo $total_s =($qty * $sale_p);
                                     $total_sale = $total_s+$total_sale;
                                     ?>
                                     </td>
-                                    <td><?php echo date('M-d-Y', strtotime( $v->par_date ));?></td>
+                                    <td><?php echo $v->par_date;?></td>
                                 </tr>
                             <?php $sno++; } ?>
                            <br>
@@ -94,21 +99,21 @@
                            </tbody>
                            <tr>
                            <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                               <td>
+                               <th>
                                    <?php echo $t_qnty;?> 
-                               </td>
-                               <td>
+                               </th>
+                               <th>
                                    <?= $t_price; ?>
-                               </td>
-                               <td>
+                               </th>
+                               <th>
                                    <?=  $all_price;?> 
-                               </td>
-                               <td>
+                               </th>
+                               <th>
                                   <?php echo $sale_price;?> 
-                               </td>
-                               <td>
+                               </th>
+                               <th>
                                   <?= $total_sale;?>  
-                               </td>
+                               </th>
                                <td></td>
                            </tr>
                           <?php } else{ ?>

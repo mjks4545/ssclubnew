@@ -1,4 +1,10 @@
-<footer class="main-footer">
+<style type="text/css">
+@media print
+   {
+      .display-none-on-print {display: none;}
+   }
+</style>
+<footer class="display-none-on-print main-footer">
     <strong>Copyright &copy; 2016-2017 <a href="">SS Technologies</a>.</strong> All rights reserved.
 </footer>
       <!-- Add the sidebar's background. This div must be placed
@@ -8,7 +14,7 @@
 
     <!-- jQuery 2.1.4 -->
   
-    <script src="<?=base_url();?>public/js/jquery-ui.js"></script>
+    <!--<script src="<?=base_url();?>public/js/jquery-ui.js"></script>-->
     <!-- jQuery UI 1.11.4 -->
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -27,7 +33,6 @@
       $.widget.bridge('uibutton', $.ui.button);
     </script>
     <!-- Bootstrap 3.3.5 -->
-   
     <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="<?=base_url();?>public/plugins/morris/morris.min.js"></script>
@@ -43,8 +48,7 @@
     <script src="<?=base_url();?>public/plugins/daterangepicker/daterangepicker.js"></script>
     <!-- datepicker -->
     <script src="<?=base_url();?>public/plugins/datepicker/bootstrap-datepicker.js"></script>
-    <script src="<?=base_url();?>public/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="<?=base_url();?>public/plugins/datatables/dataTables.bootstrap.min.js"></script>
+   
     <!-- Bootstrap WYSIHTML5 -->
     <script src="<?=base_url();?>public/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
     <!-- Slimscroll -->

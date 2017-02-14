@@ -22,7 +22,9 @@
                     <div class="col-lg-1 col-xs-4"></div>
                     <div class="col-lg-5 col-xs-6">
                       <!-- small box -->
+                     <a href="<?= site_url()?>ssshootingclub/index" style="color:#fff"> 
                       <div class="small-box bg-aqua">
+                      <br>
                         <div class="inner">
                           <h3>SS Shooting CLub</h3>
                           <p>Click Below to Enter</p>
@@ -37,7 +39,9 @@
                     </div><!-- ./col -->
                    <div class="col-lg-5 col-xs-6">
                       <!-- small box -->
+                      <a href="<?= site_url()?>showroom/index" style="color:#fff">
                       <div class="small-box bg-green">
+                      <br>
                         <div class="inner">
                           <h3>ShowRoom</h3>
                           <p>Click Below to Enter</p>

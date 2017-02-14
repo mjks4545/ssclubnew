@@ -17,9 +17,16 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <small>Purchase</a>
-                <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-                Purchase Result
+            SSClub Dashboard
+            <small>
+            <a href="<?= site_url('admin/index');?>">Home</a>
+            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+            
+            <a href="<?= site_url('showroom/index');?>">Showroom</a>
+            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+            <a href="<?= site_url('Purchase_reports');?>">Search Purchase Report</a>
+            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+            <span>Report Details</span>
             </small>
         </h1>
     </section>

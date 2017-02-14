@@ -37,13 +37,13 @@
                              <input type="hidden" name="c_id" value="<?= $this->uri->segment(5); ?>">
                                  <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Name</label>
-                                     <input type="text" name="name" class="form-control" value="<?= $data[0]->Per_name?>" maxlength="50" minlength="3" placeholder="Name" required/>
+                                     <input type="text" name="name" class="form-control" value="<?= $data[0]->Per_name?>" required/>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
 								 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Cnic</label>
-                                     <input type="text" name="cnic" class="form-control" maxlength="14" value="<?= $data[0]->Per_cnic?>"  placeholder="Cnic" required/>
+                                     <input type="text" name="cnic" class="form-control" maxlength="14" value="<?= $data[0]->Per_cnic?>" required/>
                                      <input type="hidden" name="p_id" id="p_id" />
                                      <input type="hidden" name="par_price" id="par_price" />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true"  style="margin-right: 20px;"></span>
@@ -53,13 +53,13 @@
                              <div class="col-md-12">
                                 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Mobile</label>
-                                     <input type="text" name="number" pattern="(?=.*\d).{10,15}" value="<?= $data[0]->Per_number?>" class="form-control" placeholder="Mobile" required />
+                                     <input type="text" name="number" pattern="(?=.*\d).{10,15}" value="<?= $data[0]->Per_number?>" class="form-control" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
 								 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Address</label>
-                                     <input type="text" name="address"  maxlength="200" minlength="1" value="<?= $data[0]->Per_address?>" class="form-control" placeholder="Address" required />
+                                     <input type="text" name="address"  maxlength="200" minlength="1" value="<?= $data[0]->Per_address?>" class="form-control" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -99,7 +99,7 @@
 
                                 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Prd code</label>
-                                    <input type="text" name="pr_code"  class="form-control" value="<?= $data[0]->p_code ?>" id="pr_code" placeholder="Product code" required />
+                                    <input type="text" name="pr_code"  class="form-control" value="<?= $data[0]->p_code ?>" id="pr_code" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -109,14 +109,14 @@
 							<div class="col-md-12">
 							     <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">License Number</label>
-                                     <input type="text" name="l_no" minlength="1" maxlength="10"  class="form-control" value="<?php if(isset($data)){ echo $data[0]->Per_license_no; } ?>" placeholder="Enter license Number" required />
+                                     <input type="text" name="l_no" minlength="1" maxlength="10"  class="form-control" value="<?php if(isset($data)){ echo $data[0]->Per_license_no; } ?>" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
                                  <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Weapon Number</label>
                                   <div class="form-group has-feedback form-inline">
-                                    <input type="text" name="weapon_no_1" class="form-control" value="<?= $data[0]->s_weapon_no?>" id="weapon_no_1" placeholder="Weapon Number" style="width:100%" />
+                                    <input type="text" name="weapon_no_1" class="form-control" value="<?= $data[0]->s_weapon_no?>" id="weapon_no_1" style="width:100%" />
                                     <span class="add_field_span">
                                    <!--  <button class="add_field_button btn-sm btn btn-info" style="width:8%"><i class="fa fa-plus"></i></button> -->
                                     </span>
@@ -160,7 +160,7 @@
                                  </div>
 								 <div class="form-group has-feedback col-md-3">
                                      <label >Quantity</label>
-                                     <input type="text" name="quantity" id="quantity" value="<?= $data[0]->s_quantity?>" minlength="1" maxlength="20" class="form-control" placeholder="Quantity" required />
+                                     <input type="text" name="quantity" id="quantity" value="<?= $data[0]->s_quantity?>" minlength="1" maxlength="20" class="form-control" required />
                                      <p style="color:green;display:none;" id="instock">In Stock</p>
                                      <p style="color:red;display:none;" id="outstock">Sorry out of stock</p>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
@@ -168,13 +168,13 @@
                                  </div>
 								 <div class="form-group has-feedback col-md-2">
                                      <label for="exampleInputEmail1">Rate</label>
-                                     <input type="text" name="rate" id="rate" value="<?= $data[0]->s_price?>" minlength="1" maxlength="20"  class="form-control" id="exampleInputEmail1" placeholder="Rate" required />
+                                     <input type="text" name="rate" id="rate" value="<?= $data[0]->s_price?>" minlength="1" maxlength="20"  class="form-control" id="exampleInputEmail1" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
 								 <div class="form-group has-feedback col-md-2">
                                      <label for="exampleInputEmail1">Total</label>
-                                     <input type="text" name="total" id="total" value="<?= $data[0]->s_total_price?>" pattern="(?=.*\d).{1,15}" minlength="1" maxlength="100"  class="form-control" id="exampleInputEmail1" placeholder="Total" required />
+                                     <input type="text" name="total" id="total" value="<?= $data[0]->s_total_price?>" pattern="(?=.*\d).{1,15}" minlength="1" maxlength="100"  class="form-control" required />
                                      <input type="hidden" name="old_per_id" value="<?= $this->uri->segment(4) ?>"/>
                                      <input type="hidden" name="old_s_id" value="<?= $this->uri->segment(3) ?>"/>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
@@ -182,7 +182,7 @@
                                  </div>
 								  <div class="form-group has-feedback col-md-3">
                                      <label for="exampleInputEmail1">Details</label>
-                                     <input type="text" name="details" value="<?= $data[0]->notes?>" minlength="1" class="form-control" placeholder="Details" required />
+                                     <input type="text" name="details" value="<?= $data[0]->notes?>" minlength="1" class="form-control" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>

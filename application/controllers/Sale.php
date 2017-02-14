@@ -7,6 +7,13 @@ class Sale extends CI_Controller
     {
         parent::__construct();
         $this->load->model("sales_m");
+
+        $user = $this->session->userdata('session_data');
+          if (!isset($user)) { 
+            $this->session->set_flashdata('msg','Please enter eamil and password to login');
+            $this->session->set_flashdata('type','warning');
+           redirect('home');
+          } 
     }
 
     // -------------------------------------------------------------------------
@@ -15,28 +22,40 @@ class Sale extends CI_Controller
 	function index()
 	{
 		$this->load->view('include/header');
-        // $this->load->view('include/sidebar');
         $this->load->view('showroom/sales/search_sales');
         $this->load->view('include/footer');
 	}
 	
 	function search_by_nic()
 	{
-		$result['search_data'] = $this->sales_m->search_by_nic();
-        if($result['search_data'] )
-         {
-            $this->load->view('include/header');
-            // $this->load->view('include/sidebar');
-            $this->load->view('showroom/sales/searched_sales',$result);
-            $this->load->view('include/footer');
-         }
-        else
-        {
-            $this->load->view('include/header');
-            // $this->load->view('include/sidebar');
-            $this->load->view('showroom/sales/new_sale');
-            $this->load->view('include/footer');   
-        }
+            $this->load->model('product_m');
+            $data_res = $this->product_m->get_all_products();
+            $array = [];
+             foreach ($data_res as $value) {
+                 if( !in_array($value->p_name, $array) ){
+                     $array[] = $value->p_name;          
+                 }
+             }
+             $result['product'] = $array; 
+
+
+             $result['nic'] = $this->input->post('nic_no');
+
+                     $result['search_data'] = $this->sales_m->search_by_nic();
+             //echo '<pre>';print_r($result['search_data']);die;
+
+             if($result['search_data'] )
+              {
+                 $this->load->view('include/header');
+                 $this->load->view('showroom/sales/searched_sales',$result);
+                 $this->load->view('include/footer');
+              }
+             else
+             {
+                 $this->load->view('include/header');
+                 $this->load->view('showroom/sales/new_sale',$result);
+                 $this->load->view('include/footer');   
+             }
 
 	}
 
@@ -44,32 +63,45 @@ class Sale extends CI_Controller
     {
         $result = $this->sales_m->insert_sale_data();
         $id = $this->uri->segment(3);
+        $c_id = $this->uri->segment(4);
+        if(isset($c_id))
+        {
+            $c_id =  $c_id;
+        }else
+        {
+            $c_id = '';
+        }
         $this->session->set_flashdata('msg','Your sale added successfully');
         $this->session->set_flashdata('type','success');
-        redirect('sale/add_more_sale/'.$id);
+        redirect('sale/add_more_sale/'.$id.'/'.$c_id);
     }
 
     function insert_new_sale() 
     {
         $result = $this->sales_m->insert_new_sale();
+
         // echo '<pre>';print_r($result);die;
         // echo $id = $this->uri->segment(3);
         // $per_id = $this->session->userdata('sess_per_id');
-        redirect('sale/F/'.$result);
+        redirect('sale/add_more_sale/'.$result);
     }
 
     function add_more_sale()
     {
+        $this->load->model('product_m');
+        $data = $this->product_m->get_all_products();
+        $array = [];
+        foreach ($data as $value) {
+            if( !in_array($value->p_name, $array) ){
+                $array[] = $value->p_name;          
+            }
+        }
+        $sale_data['product'] = $array;
         $per_id = $this->uri->segment(3);
-        // $c_id = $this->uri->segment(4);
         $sale_data['saled_data'] = $this->sales_m->saled_records($per_id);
-        // echo '<pre>';print_r($sale_data);die;
         $this->load->view('include/header');
-        // $this->load->view('include/sidebar');
         $this->load->view('showroom/sales/add_more_sales',$sale_data);
         $this->load->view('include/footer');    
-
-        // $this->session->unset_userdata('sess_per_id');
     }
 
     function add_sale()
@@ -92,12 +124,17 @@ class Sale extends CI_Controller
 
     function delete_sale()
     {
-        $qnty = $this->input->post('qnty');
-        $s_id = $this->input->post('s_id');
+        // $qnty = $this->input->post('qnty');
+        // $s_id = $this->input->post('s_id');
+        $qnty = $this->uri->segment(3);
+        $s_id = $this->uri->segment(4);
+        $per_id = $this->uri->segment(5);
+        $c_id = $this->uri->segment(6);
+        
         $result = $this->sales_m->delete_sale($s_id,$qnty);
         $this->session->set_flashdata('msg','successfully deleted');
         $this->session->set_flashdata('type','success');
-        // redirect('sale/add_more_sale/'.$per_id);
+        redirect('sale/add_more_sale/'.$per_id.'/'.$c_id);
     }
 
     function get_data_update()
@@ -193,10 +230,10 @@ class Sale extends CI_Controller
     {
         $per_id    = $this->uri->segment(3);
         $b_id      = $this->uri->segment(4);
-        $sale_bill = $this->sales_m->sales_bill($per_id,$b_id); 
-        // echo '<pre>';print_r($sale_bill);die;
+        $sale_bill = $this->sales_m->sales_bill($per_id,$b_id);
+        $this->sales_m->updatenofires( $sale_bill, $b_id);
+        //echo '<pre>';print_r($sale_bill);die;
         $this->load->view('include/header');
-        // $this->load->view('include/sidebar');
         $this->load->view('showroom/sales/sales_bill',$sale_bill);
         $this->load->view('include/footer');
     }
@@ -204,20 +241,21 @@ class Sale extends CI_Controller
     function save_bill() 
     {
         $per_id = $this->uri->segment(3);
-        $result = $this->sales_m->save_bill($per_id);
+        $c_id   = $this->uri->segment(4);
+        $result = $this->sales_m->save_bill($per_id,$c_id);
         // echo '<pre>';print_r($result);die;
         $saled_data = $this->sales_m->saled_data($per_id);
         if($result == 0 )
         {
             $this->session->set_flashdata('msg','Bill Already Saved');
             $this->session->set_flashdata('type','warning');
-            redirect('sale/sales_bill/'.$per_id);
+            redirect('sale/sales_bill/'.$per_id.'/'.$c_id);
         }
         else
         {
         $update_sale = array(
                 'b_id'      => $result,
-                'sale_save_status' =>1
+                'sale_save_status' => 1
             );
         foreach ($saled_data as $value) 
         {
@@ -239,6 +277,47 @@ class Sale extends CI_Controller
 
         }
 
+    }
+
+// -------------------------------------------------------------------//
+    function return_product_name()
+    {
+        $this->db->select('p_name');
+        $this->db->like('p_name',$this->input->post('product_name'));
+        $query = $this->db->get('product');
+        $data = $query->result();
+        $array = [];
+        foreach ($data as $value) {
+            if( !in_array($value->p_name, $array) ){
+                $array[] = $value->p_name;          
+            }
+        }
+        $this->output->set_content_type('application_json');
+         $this->output->set_output( json_encode([
+             'result'   => 1,
+             'array'    => $array
+         ]) );
+
+    } 
+// --------------------------------------------------------------------//
+
+    function return_search_nic()
+    {
+        $nic = $this->input->post('nic');
+        $query = $this->sales_m->search_by_nic($nic);
+        $data = $query;
+        // echo '<pre>';print_r($data);die;
+        $array = [];
+        foreach ($data as $value) {
+            if( !in_array($value->Per_cnic, $array) ){
+                $array[] = $value->Per_cnic;          
+            }
+        }
+        $this->output->set_content_type('application_json');
+         $this->output->set_output( json_encode([
+             'result'   => 1,
+             'array'    => $array
+         ]) ); 
     }
 
 

@@ -1,3 +1,5 @@
+<?php $name = $this->uri->segment(3);   
+   $c_name = str_replace(["%","20"], ' ', $name); ?>
  <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -15,25 +17,133 @@
                  <div class="box box-primary">
                          
                      <div class="box-header with-border">
-                         <h2 style="text-align:center;">Customer Form</h2>
+                         <h2 style="text-align:center;">Purchase Form</h2>
 						 
                          <a href="<?= site_url()?>customer/" class="pull-right"> Back</a>
                      </div><!-- /.box-header -->
                      <!-- form start -->
                      <form role="form" data-toggle="validator" action="<?= site_url()?>Showroom/insert_new_purchase_customer" method="post">
                          <div class="box-body">
-                         <div class="col-md-6 col-sm-offset-3">
+
+                             <div class="col-md-6 col-sm-offset-3" style="width:47%;">
                                   <div class="form-group has-feedback">
-                                     <label for="exampleInputEmail1">Name</label>
-                                    <input type="text" name="per_name"  class="form-control" value=""  id="exampleInputEmail1" placeholder="" required />
+                                     <label for="exampleInputEmail1">Product</label>
+                                     <select name="product_name" id="product_main" class="form-control" required>
+                                     <option value="">Select</option>
+                                     <?php 
+                                     if(isset($product)){
+                                        foreach ($product as  $value) {?>
+                                     <option value="<?= $value?>"><?= $value?></option>
+                                     <?php }}?>?>   
+                                    </select>
+                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
+                                 </div>
+                                </div>
+                                 <div class="col-md-6 col-sm-offset-3" style="width:47%;">
+                                  <div class="form-group has-feedback">
+                                     <label for="exampleInputEmail1">Product Type</label>
+                                    <select class="form-control" id="prod_type">
+                                       <option>Select Type</option>
+                                    </select>
+                                 </div>
+                                </div>
+                                <div class="col-md-6 col-sm-offset-3" style="width:47%;">
+                                  <div class="form-group has-feedback">
+                                     <label for="exampleInputEmail1">Product Model</label>
+                                       <select class="form-control" id="prod_model" required>
+                                           <option>Select Type</option>
+                                        </select>
+                                 </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-offset-3" style="width:47%;">
+                                  <div class="form-group has-feedback">
+                                     <label for="exampleInputEmail1">Prd Code</label>
+                                    <input type="text" name="pr_code" class="form-control"   id="pr_code" required />
+                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
+                                 </div>
+                                </div>
+
+                               <div class="col-md-6 col-sm-offset-3">
+                                  <div class="form-group has-feedback">
+                                     <label for="exampleInputEmail1">Quantity</label>
+                                    <input type="text" name="qnty"  class="form-control"  id="qnty" required />
+                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
+                                 </div>
+                                </div>
+                                
+                                <div class="col-md-6 col-sm-offset-3">
+                                     <label for="exampleInputEmail1">Weapon Number</label>
+                                  <div class="form-group has-feedback form-inline">
+                                    <input type="text" name="wea_no"  class="form-control"  id="weapon_no" style="width:90%"/ disabled="">
+                                    <span class="add_field_span">
+                                    <button class="add_field_button btn-sm btn btn-info" style="width:8%" disabled=""><i class="fa fa-plus"></i></button>
+                                    </span>
+                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
+                                 </div>
+                                </div>                                 
+
+                                <div class="col-md-6 col-sm-offset-3">
+                                  <div class="form-group has-feedback">
+                                     <label for="exampleInputEmail1">Remarks</label>
+                                    <select class="form-control" name="remarks" id="remarks" required disabled="">
+                                         <option value="">Select</option>
+                                         <option value="registred">Registred</option>
+                                         <option value="unregistred">Un Registred</option>
+                                     </select>
+                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
+                                 </div>
+                                </div>    
+
+                                 <div class="col-md-6 col-sm-offset-3">
+                                  <div class="form-group has-feedback">
+                                     <label for="exampleInputEmail1">Purchase Price</label>
+                                    <input type="text" name="pur_price"  class="form-control"  id="exampleInputEmail1" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
                                  </div>
                                  <div class="col-md-6 col-sm-offset-3">
                                   <div class="form-group has-feedback">
+                                     <label for="exampleInputEmail1">Sales Price</label>
+                                    <input type="text" name="sal_price"  class="form-control"  id="exampleInputEmail1" placeholder="" required />
+                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
+                                 </div>
+                                 </div>
+                                
+
+
+                         <div class="col-md-6 col-sm-offset-3">
+                                  <div class="form-group has-feedback">
+                                     <label for="exampleInputEmail1">Name</label>
+                                    <input type="text" name="per_name" class="form-control" value="<?php if( isset($c_name) ){echo $c_name;}?>"  id="exampleInputEmail1" placeholder="" required />
+                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
+                                 </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-offset-3">
+                                  <div class="form-group has-feedback">
+                                     <label for="exampleInputEmail1">Purchase From</label>
+                                     <select type="text" name="purchase_from" id="purchase_from" class="form-control" maxlength="50" required>
+                                     <option value="">Select</option>
+                                     <option value="Individual" >Individual</option>
+                                     <option value="Dealer" >Dealer</option>
+                                     </select>
+                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
+                                 </div>
+                                </div>
+
+                                 <div class="col-md-6 col-sm-offset-3">
+                                  <div class="form-group has-feedback">
                                      <label for="exampleInputEmail1">Cnic</label>
-                                    <input type="text" name="per_cnic"  class="form-control" pattern="(?=.*\d).{13,13}" value="" placeholder="" minlength="13" maxlength="13" required />
+                                    <input type="text" name="per_cnic" id="per_cnic" class="form-control" value="" placeholder="" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -41,7 +151,7 @@
                                  <div class="col-md-6 col-sm-offset-3">
                                   <div class="form-group has-feedback">
                                      <label for="exampleInputEmail1">Phone no</label>
-                                    <input type="text" name="per_number"  class="form-control" value="" pattern="(?=.*\d).{11,16}" minlength="11" maxlength="16" placeholder="" required />
+                                    <input type="text" name="per_number"  class="form-control" value="" maxlength="16" placeholder="" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -62,123 +172,26 @@
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
                                  </div>
-                             <div class="col-md-6 col-sm-offset-3">
-                                  <div class="form-group has-feedback">
-                                     <label for="exampleInputEmail1">Product</label>
-                                     <select type="text" name="product_name" id="product_main" class="form-control" minlength="1" maxlength="50" id="exampleInputEmail1" required>
-									 <option>Select Option</option>
-                                        <option value="Acessories">Acessories</option>
-                                        <option value="Ammunition">Ammunition</option>
-                                        <option value="Pistol">Pistol</option>
-                                        <option value="Rifle">Rifle</option>
-                                        <option value="Shortgun">Shortgun</option>
-                                        <option value="Air Rifle">Air Rifle</option>
-									 </select>
-                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
-                                 </div>
-						        </div>
-								 <div class="col-md-6 col-sm-offset-3">
-                                  <div class="form-group has-feedback">
-                                     <label for="exampleInputEmail1">Product Type</label>
-                                    <select class="form-control" id="prod_type">
-                                       <option>Select Type</option>
-                                    </select>
-                                 </div>
-						        </div>
-								<div class="col-md-6 col-sm-offset-3">
-                                  <div class="form-group has-feedback">
-                                     <label for="exampleInputEmail1">Product Model</label>
-                                       <select class="form-control" id="prod_model" required>
-                                           <option>Select Type</option>
-                                        </select>
-                                 </div>
-						        </div>
-
-                                <div class="col-md-6 col-sm-offset-3">
-                                  <div class="form-group has-feedback">
-                                     <label for="exampleInputEmail1">Prd Code</label>
-                                    <input type="text" name="pr_code"  class="form-control"   id="pr_code" placeholder="" required />
-                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
-                                 </div>
-                                </div>
-
-								<div class="col-md-6 col-sm-offset-3">
-                                     <label for="exampleInputEmail1">Weapon Number</label>
-                                  <div class="form-group has-feedback form-inline">
-                                    <input type="text" name="wea_no"  class="form-control"  id="weapon_no" placeholder="" style="width:90%" required/>
-                                    <span class="add_field_span">
-                                    <button class="add_field_button btn-sm btn btn-info" style="width:8%"><i class="fa fa-plus"></i></button>
-                                    </span>
-                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
-                                 </div>
-						        </div>
-                                <div class="col-md-6 col-sm-offset-3">
-                                  <div class="form-group has-feedback">
-                                     <label for="exampleInputEmail1">Weapon Number in Stock</label>
-                                    <input type="text" name="stock_weapon_no" id="stock_weapon_no"  class="form-control"  id="stock_weapon_no" readonly />
-                                    <input type="hidden" name="prod_id"  class="form-control"  id="prod_id" />
-                                 </div>
-                                </div>
-                                <div class="col-md-6 col-sm-offset-3">
-                                  <div class="form-group has-feedback">
-                                     <label for="exampleInputEmail1">Quantity</label>
-                                    <input type="text" name="qnty"  class="form-control"  id="qnty" placeholder="" required />
-                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
-                                 </div>
-                                </div>
-								<div class="col-md-6 col-sm-offset-3">
-                                  <div class="form-group has-feedback">
-                                     <label for="exampleInputEmail1">Remarks</label>
-                                    <select class="form-control" name="remarks" required>
-                                         <option value="">Select</option>
-                                         <option value="registred">Registred</option>
-                                         <option value="unregistred">Un Registred</option>
-                                     </select>
-                                    <!-- <input type="text" name="remarks"  class="form-control"  id="exampleInputEmail1" placeholder="" required /> -->
-                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
-                                 </div>
-						        </div>
-								 <div class="col-md-6 col-sm-offset-3">
-                                  <div class="form-group has-feedback">
-                                     <label for="exampleInputEmail1">Purchase From</label>
-                                     <select type="text" name="purchase_from" class="form-control" minlength="1" maxlength="50" id="exampleInputEmail1" required>
-									 <option>Select</option>
-									 <option value="Individual" >Individual</option>
-									 <option value="Dealer" >Dealer</option>
-									 </select>
-                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
-                                 </div>
-						        </div>
-
-								 <div class="col-md-6 col-sm-offset-3">
-                                  <div class="form-group has-feedback">
-                                     <label for="exampleInputEmail1">Purchase Price</label>
-                                    <input type="text" name="pur_price"  class="form-control"  id="exampleInputEmail1" placeholder="" required />
-                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
-                                 </div>
-                                 </div>
-								 <div class="col-md-6 col-sm-offset-3">
-                                  <div class="form-group has-feedback">
-                                     <label for="exampleInputEmail1">Sales Price</label>
-                                    <input type="text" name="sal_price"  class="form-control"  id="exampleInputEmail1" placeholder="" required />
-                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
-                                 </div>
-                                 </div>
                                  <div class="col-md-6 col-sm-offset-3">
                                  <div class="form-group has-feedback">
                                      <label for="">Purchase date</label>
-                                     <input type="date" name="par_date"  class="form-control"  id="exampleInputEmail1" placeholder="" required />
+                                     <input type="date" name="par_date" class="form-control" value="<?= date("Y-m-d")?>" placeholder="" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
+                                 </div> 
+
+                                <div class="col-md-6 col-sm-offset-3">
+                                  <div class="form-group has-feedback">
+                                    <!--  <label for="exampleInputEmail1">Weapon Number in Stock</label>
+                                    --><input type="hidden" name="stock_weapon_no" id="stock_weapon_no"  class="form-control"  id="stock_weapon_no" readonly /> 
+                                    <input type="hidden" name="prod_id"  class="form-control"  id="prod_id" />
                                  </div>
+                                </div>
+
+                                
+
+ 
 								
                             
                            	
@@ -198,14 +211,14 @@ $(function(){
 
  $("#product_main").change(function(){
      var prod_cat = this.value;
-       if(prod_cat =='Acessories' || prod_cat =='Ammunition' || prod_cat=='Air Rifle' )
+       /*if(prod_cat =='Acessories' || prod_cat =='Ammunition' || prod_cat=='Air Rifle' )
        {
         $("#weapon_no").attr("disabled","");
         $(".add_field_button").attr("disabled","");
        }else{
         $("#weapon_no").removeAttr("disabled");
         $(".add_field_button").removeAttr("disabled");
-       }  
+       } */ 
 
 
      $("#pr_code").val('');  
@@ -249,7 +262,7 @@ $("#prod_model").change(function(){
     var model = this.value;
     
     $.ajax({
-        url:"<?= site_url('Showroom/get_product_code')?>",
+        url:"<?= site_url('showroom/get_product_code_pr')?>",
         type:'POST',
         data:{product:product,type:type,model:model},
         success:function( data )
@@ -268,23 +281,35 @@ $("#prod_model").change(function(){
 $("#pr_code").keyup(function(){
     var code = $("#pr_code").val();
     // alert(code);exit;
+    /*if(code =='Ammunition'){
+        $("#remarks").removeAttr("disabled","");
+    }*/
     $.ajax({
-        url:"<?= site_url('Showroom/get_code_search_data')?>",
+        url:"<?= site_url('showroom/get_code_search_data_pr')?>",
         type:'POST',
         data:{code:code},
         success:function( data )
         {
          
-         if(data.p_name =='Acessories' || data.p_name =='Ammunition' || data.p_name=='Air Rifle' )
+       /*  if(data.p_name =='Acessories' || data.p_name =='Ammunition' || data.p_name=='Air Rifle' )
        {
         $("#weapon_no").attr("disabled","");
-        $(".add_field_button").attr("disabled","");
+         $(".add_field_button").attr("disabled","");
        }else{
         $("#weapon_no").removeAttr("disabled");
-        $(".add_field_button").removeAttr("disabled");
-       }
-
+         $(".add_field_button").removeAttr("disabled");
+       }*/
             $("#product_main").val(data.p_name);
+            if(data.p_name == 'Rifle' || data.p_name =='Shortgun' || data.p_name =='Pistol' )
+            {
+                $("#remarks").removeAttr("disabled","");
+                $("#weapon_no").removeAttr("disabled","");
+                $(".add_field_button").removeAttr("disabled",'');
+            }else if(data.p_name == 'Ammunition')
+            {
+                $("#remarks").removeAttr("disabled","");
+            } 
+
             $("#prod_id").val(data.p_id);
             $("#stock_weapon_no").val(data.p_quantity);
             $("#prod_type").html('<option>'+data.p_type+'</option>');
@@ -319,4 +344,26 @@ $("#qnty").keyup(function(){
     })
 });
 });
+
+ /*$(function() {
+        var scntDiv = $('.weapon_appento');
+        var i = $('#weapon_no').size() + 1;
+        
+        $('.add_field_button').on('click', function() {
+            // alert('hy');exit;
+                $('<p><input type="text" class="form-control" name="weapon_no_'+i+'" style="width:90%;margin-top:3px;"/ required> <a href="javascript:void(0)" class="rem_field" id="remScnt">Remove</a></p>').appendTo(scntDiv);
+                i++;
+                return false;
+        });
+        
+        $('body').on('click','.rem_field', function() { 
+                // alert('osha kana');
+                if( i > 2 ) {
+                        $(this).parents('p').remove();
+                        i--;
+                }
+                return false;
+        });
+});*/
+
  </script>

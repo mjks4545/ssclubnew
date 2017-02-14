@@ -25,15 +25,8 @@
                             <div class="col-md-12">
                                 <div class="form-group has-feedback col-md-6">
                                     <label for="exampleInputEmail1">Product Name</label>
-                                    <select name="name" class="form-control" required>
-                                        <option selected="selected"  value="">--Select Option--</option>
-                                        <option value="Acessories">Acessories</option>
-                                        <option value="Ammunition">Ammunition</option>
-                                        <option value="Pistol">Pistol</option>
-                                        <option value="Rifle">Rifle</option>
-                                        <option value="Shortgun">Shortgun</option>
-                                        <option value="Air Rifle">Air Rifle</option>
-                                    </select>
+                                    <input type="text" name="name" id="product_main" class="form-control" value="<?=$result[0]['p_name'];?>" placeholder="Product Name" required>
+                                     
                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                     <span class="help-block with-errors" style="margin-left:10px; "></span>
                                 </div>

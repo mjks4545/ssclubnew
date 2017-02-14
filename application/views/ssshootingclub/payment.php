@@ -10,11 +10,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Director Dashboard
-            <small><a href="<?= site_url()?>student/">Payment</a>
-                <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-                View Payment
-            </small>
+            <section class="content-header">
+          <h1>
+      SSClub Dashboard
+      <small> <a href="<?= site_url()?>admin/">Home</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; <a href="<?= site_url()?>ssshootingclub/searchmemeber">Search Members</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; <a href="<?=  site_url('ssshootingclub/member_detail/'.$this->uri->segment(3).'/'.$this->uri->segment(4))?>">Member Details</a>  <i class="fa fa-chevron-circle-right" aria-hidden="true"></i> <i>Payment History</i> </small>
+    </h1>
+        </section>
         </h1>
     </section>
     <!-- Main content -->
@@ -44,12 +45,12 @@
                             </thead>
                             <tbody>
                            <tr style="height:80px" class="per_rec"> 
-						      <td><?= $persondata[0]->Per_name?></td>
+						                  <td><?= $persondata[0]->Per_name?></td>
                               <td><?= $persondata[0]->Per_cnic?></td>
                               <td><?= $persondata[0]->Per_number?></td>
                               <td><?= $persondata[0]->Per_address?></td>
                               <!-- <td><?= $persondata[0]->m_valid_to?></td> -->
-                              <td><?php echo date( 'M-d-Y', strtotime( $persondata[0]->m_valid_to ) );  ?></td>
+                              <td><?php echo $persondata[0]->m_valid_to; ?></td>
                            </tr>
                              </tbody>
                         </table>
@@ -64,7 +65,7 @@
                             <tr>
                                 <th>S.no</th>
                                 <th>Payment</th>
-                                <th>Date</th>
+                                <th>Payment date</th>
                                 <th>Valid Till</th>
                             </tr>
                             </thead>
@@ -72,8 +73,14 @@
                             <tr> 
                               <td>1</td>
                               <td><?= $persondata[0]->m_payment?></td>
-                              <td><?= $persondata[0]->m_valid_to?></td>
-                              <td><?= $persondata[0]->m_valid_from?></td>
+                              <td><?php echo $persondata[0]->m_valid_from; ?></td>
+                              <td>
+                              <?php if(empty($payment_data) )
+                              {
+                                 echo $persondata[0]->m_valid_to;
+                              } ?>
+
+                              </td>
                           </tr>
                            <?php $sno=2; 
                                  $total_payment = $persondata[0]->m_payment; 
@@ -81,8 +88,8 @@
                            <tr> 
 						                  <td><?= $sno?></td>
                               <td><?= $value->r_payment?></td>
-                              <td><?= $value->r_date?></td>
-                              <td><?= $value->r_valid_to?></td>
+                              <td><?php echo $value->r_date;?></td>
+                              <td><?php echo $value->r_valid_to;?></td>
                           </tr>
                           <?php 
                             $total_payment = $total_payment + $value->r_payment;

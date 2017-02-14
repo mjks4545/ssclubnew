@@ -2,17 +2,22 @@
 class Ssshootingclub extends CI_Controller{
 
     // -------------------------------------------------------------------------
-	 function __construct() {
+    function __construct() {
 	
 	parent::__construct();
 	$this->load->model( 'Membership_m' );
-	
-    }
+
+        $user = $this->session->userdata('session_data');
+          if (!isset($user)) { 
+            $this->session->set_flashdata('msg','Please enter eamil and password to login');
+            $this->session->set_flashdata('type','warning');
+           redirect('home');
+          } 
+    } 
     
     function index(){
 	
         $this->load->view('include/header');
-        // $this->load->view('include/sidebar');
         $this->load->view('ssshootingclub/home_view');
         $this->load->view('include/footer');
     
@@ -34,7 +39,6 @@ class Ssshootingclub extends CI_Controller{
     function checkin_search(){
 	
         $this->load->view('include/header');
-/*        $this->load->view('include/sidebar');*/
         $this->load->view('ssshootingclub/checkin_search');
         $this->load->view('include/footer');
     
@@ -62,22 +66,30 @@ class Ssshootingclub extends CI_Controller{
     // -------------------------------------------------------------------------
     
     function checkmember(){
-		$this->load->model('main_m');
+        trim($nic['nic_no'] = $this->input->post('cnic_cardno'));
+        $this->load->model('main_m');
         $data = $this->main_m->searchmember();
-        // echo '<pre>';print_r($data);die;
-        if($data==0)
+        $data_1['data'] = $this->main_m->searchmember_person($nic['nic_no']);
+       // echo '<pre>';print_r($data);die;
+        if( $data != NULL )
         {
-        $this->load->view('include/header');
-/*        $this->load->view('include/sidebar');*/
-        $this->load->view('ssshootingclub/new_checkin_view');
-        $this->load->view('include/footer');  
-        }
-        else
-        {
-	    $this->load->view('include/header');
-/*        $this->load->view('include/sidebar');*/
-        $this->load->view('ssshootingclub/checkin_view',$data);
-        $this->load->view('include/footer');
+            $this->load->view('include/header');
+            $this->load->view('ssshootingclub/checkin_view',$data);
+            $this->load->view('include/footer');
+            
+        } else if ( $data_1['data'] != NULL ){
+            // echo '<pre>';
+            // print_r($data_1);
+            // die;
+            $this->load->view('include/header');
+            $this->load->view('ssshootingclub/new_checkin_view', $data_1);
+            $this->load->view('include/footer');
+            
+        }else{
+	        $this->load->view('include/header');
+            $this->load->view('ssshootingclub/new_checkin_view', $nic);
+            $this->load->view('include/footer');
+            
         }
     }
     
@@ -85,15 +97,14 @@ class Ssshootingclub extends CI_Controller{
     
     function membership_add(){
 	    $this->load->view('include/header');
-/*        $this->load->view('include/sidebar');*/
         $this->load->view('ssshootingclub/membership_add');
         $this->load->view('include/footer');
-    
     }
+    
     public function membership_add_after_post(){
+    	$result = $this->Membership_m->insert();
         $this->session->set_flashdata('msg','Membership added Successfully');
         $this->session->set_flashdata('type','success');
-    	$result = $this->Membership_m->insert();
         redirect('admin');
     }
 
@@ -110,32 +121,29 @@ class Ssshootingclub extends CI_Controller{
 ///////////////////// SEARCH ////////////////////////////////////    
 public function searchmemeber(){
 	   $this->load->view('include/header');
-/*        $this->load->view('include/sidebar');*/
         $this->load->view('ssshootingclub/searchmemeber');
         $this->load->view('include/footer');
 }
 
 public function searchmembertable2(){
+        
         $data['search_data'] = $this->Membership_m->search_member_data();
-       // echo $this->input->post('name');die;
-       // echo '<Pre>';print_r($data);die;
+        $data['search_data'] = $this->Membership_m->payment_history_membership( $data['search_data'] );
 	    $this->load->view('include/header');
-/*        $this->load->view('include/sidebar');*/
         $this->load->view('ssshootingclub/searchmembertable2',$data);
         $this->load->view('include/footer');
 	
 }
 public function searchallmember(){
+
         $data['all_data'] = $this->Membership_m->search_all_data();
 	    $this->load->view('include/header');
-/*        $this->load->view('include/sidebar');*/
         $this->load->view('ssshootingclub/searchallmember',$data);
         $this->load->view('include/footer');
 	
 }
 public function advancesearch(){
 	    $this->load->view('include/header');
-/*        $this->load->view('include/sidebar');*/
         $this->load->view('ssshootingclub/advancesearch');
         $this->load->view('include/footer');
 }
@@ -153,10 +161,9 @@ public function advancesearch(){
     ////////// Advance search Full/////////////////
     function advance_search_full()
     {
-        $data = $this->Membership_m->advance_search_full();
+        $data = $this->Membership_m->advance_search_full(); 
         // echo '<pre>';print_r($data);die;
         $this->load->view('include/header');
-        /*$this->load->view('include/sidebar');*/
         $this->load->view('ssshootingclub/advance_search_result',$data);
         $this->load->view('include/footer');
 
@@ -164,13 +171,13 @@ public function advancesearch(){
 
     function adv_search_member_detail()
     {
-        $per_id = $this->uri->segment(3);
-        $mem_id   = $this->uri->segment(4); 
+        $per_id   = $this->uri->segment(3);
+        $c_id     = $this->uri->segment(4);
+        $mem_id   = $this->uri->segment(5); 
 
-        $data = $this->Membership_m->member_details($per_id,$mem_id);    
-        // echo '<pre>';print_r($data);die;
+        $data = $this->Membership_m->member_details($per_id,$c_id,$mem_id);    
+         //echo '<pre>';print_r($data);die; 
         $this->load->view('include/header');
-/*        $this->load->view('include/sidebar');*/
         $this->load->view('ssshootingclub/adv_search_member_detail',$data);
         $this->load->view('include/footer');    
     }
@@ -194,17 +201,21 @@ public function advancesearch(){
         $this->load->model('main_m');
         $data = $this->main_m->get_person_data($p_id,$m_id,$c_id);
         // echo '<pre>';print_r($data);die;
+        // echo '<br>'.$data['guest_checkindata'][2][0]->g_profile_img;
+        // die;
         $this->load->view('include/header');
         /* $this->load->view('include/sidebar');*/
         $this->load->view('ssshootingclub/person_detail',$data);
         $this->load->view('include/footer');
     }
 
-    function checkout_person()
+    function checkout_person() 
     {
-        // $c_id = $this->uri->segment(3);
+        $c_id      = $this->uri->segment(3);
+        $arr_time  = $this->uri->segment(4); 
+        
         $this->load->model('main_m');
-        $this->main_m->checkOut_data();
+        $this->main_m->checkOut_data($c_id,$arr_time);  
          $this->session->set_flashdata('checkout', 'Checked Out Successfully');
         redirect('Ssshootingclub/booths/');
     }
@@ -215,18 +226,24 @@ public function advancesearch(){
         $p_id = $this->uri->segment(3);
         $m_id = $this->uri->segment(4);
         $c_id = $this->uri->segment(5);
-        $this->Membership_m->save_checkin_person_data();
+        $data = $this->Membership_m->save_checkin_person_data();
+        // echo'<pre>';print_r($data);die;
         $this->session->set_flashdata('msg','Record updated Successfully');
         $this->session->set_flashdata('type','success');
         redirect('Ssshootingclub/person_detail/'.$p_id.'/'.$m_id.'/'.$c_id);
     }
 
-    function insert_new_checkin_data()
+    function insert_new_checkin_data() 
     {
         $this->Membership_m->insert_new_checkin();
         redirect('Ssshootingclub/booths');
     }
-
+    
+    function insert_new_checkin_data_w( $id ) 
+    {
+        $this->Membership_m->insert_new_checkin_data_w( $id );
+        redirect('Ssshootingclub/booths');
+    }
 
     function member_detail()
     {
@@ -234,7 +251,6 @@ public function advancesearch(){
         $data = $this->Membership_m->membership_search_member_details($per_id);    
         // echo '<pre>';print_r($data);die;
         $this->load->view('include/header');
-/*        $this->load->view('include/sidebar');*/
         $this->load->view('ssshootingclub/member_details',$data);
         $this->load->view('include/footer');
     }
@@ -277,6 +293,7 @@ public function advancesearch(){
                 'm_reason'=>$this->input->post('reason'),
                 'm_status'=>$this->input->post('cancel_type')                
             );
+        // echo '<pre>';print_r($cancel_data);die;
         $this->Membership_m->cancel_membership($m_id,$cancel_data);
         $this->session->set_flashdata('msg','Membership Is Being Blocked Successfully');
         $this->session->set_flashdata('type','success');
@@ -291,7 +308,6 @@ public function advancesearch(){
         $m_r_data['persondata'] = $this->Membership_m->membership_renewel_data($per_id);
       // echo '<pre>';print_r($m_r_data);die;
         $this->load->view('include/header');
-/*        $this->load->view('include/sidebar');*/
         $this->load->view('ssshootingclub/membership_renewel',$m_r_data);
         $this->load->view('include/footer');
     }
@@ -319,7 +335,6 @@ public function advancesearch(){
         $data = $this->Membership_m->payment_history($per_id);
         // echo '<pre>';print_r($data);die;    
         $this->load->view('include/header');
-/*        $this->load->view('include/sidebar');*/
         $this->load->view('ssshootingclub/payment',$data);
         $this->load->view('include/footer');
     }
@@ -370,7 +385,9 @@ public function advancesearch(){
     
     function returncheckin (){
  
- $this->db->like('Per_cnic',$_POST['cnic']);
+ $this->db->like( 'Per_cnic',$_POST['cnic'] );
+            $this->db->where('Per_type','M');
+            $this->db->or_where('Per_type','W');
  $query   = $this->db->get('person');
  $result  = $query->result_array();
  foreach ( $result as $row ){
@@ -379,7 +396,6 @@ public function advancesearch(){
  $this->output->set_content_type('application_json');
  $this->output->set_output( json_encode([
      'result'   => 1,
-     'success'  => 'The Teacher have been successfully inserted',
      'array'    => $array
  ]) );
  
@@ -487,7 +503,25 @@ public function advancesearch(){
           
     }
 
-    
+    //  ------------------------------------------------------------------------
 
+    public function checkProductDuplication(){
+                   $this->db->where( 'p_code', $this->input->post('name') );
+          $query  = $this->db->get('product');
+          $result = $query->result();
+          if( empty( $result ) ){
+               echo '1';
+          }else{
+               echo '0';
+          }
+    }
+    
+    //  ------------------------------------------------------------------------
+    public function get_guest_cnic(){
+        
+        $result = $this->main_m->get_guest_cnic();
+        
+    }
+    //  ------------------------------------------------------------------------
 
 }

@@ -31,8 +31,8 @@
 			<div class="col-md-12">
 			    <div class="col-md-3"></div>
 			    <div class="form-group has-feedback col-md-6">
-			      <label for="idcnic">Cnic OR Card Number</label>
-			      <input type="text" name="cnic_cardno" class="form-control"   id="idcnic" placeholder="Enter Cnic or Card Number" />
+			      <label for="idcnic">Cnic Number</label>
+			      <input type="text" name="cnic_cardno" class="form-control" id="idcnic" required/>
 			       <input type="hidden" name="checkin_id">
 			    </div>
 			</div>               

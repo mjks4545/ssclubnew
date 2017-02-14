@@ -13,7 +13,7 @@
         <section class="content-header">
           <h1>
 	    SSClub Dashboard
-	    <small> <a href="<?= site_url()?>admin/">Home</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; <a href="<?= site_url()?>ssshootingclub/index">Search Members</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; <a href="<?=  site_url()?>ssshootingclub/checkin_search">Member Details</a> </small>
+	    <small> <a href="<?= site_url()?>admin/">Home</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; <a href="<?= site_url()?>ssshootingclub/index">SSshooting club</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; <a href="<?=  site_url()?>Ssshootingclub/searchmemeber">Search Members</a> <i class="fa fa-chevron-circle-right" aria-hidden="true"></i> <span>Member details</span> </small>
 	  </h1>
         </section>
         <!-- Main content -->
@@ -47,9 +47,9 @@
                         <div class="form-group col-md-5">
                            
                             <select class="form-control" name="cancel_type" style="width:100%;height:50px">
-                              <option>Select</option>
-                              <option value="1">Block</option>
-                              <option value="2">Cancel</option>
+                              <option value="">Select</option>
+                              <option value="2">Block</option>
+                              <option value="3">Cancel</option>
                             </select>
                           </div>
                       
@@ -61,13 +61,15 @@
                   <h3 style="text-align:center;color: #8a8a8a;">Member Data</h3>
                  <div class="">
                     <div class="col-md-12">
-                        <div class="form-group col-md-6">
-                          <a href="<?= site_url('Ssshootingclub/payment_history/'.$persondata[0]->Per_id) ?>" class="btn btn-info btn-md">View Payment History</a>
+                        <div class="form-group col-md-2">
+                          <a href="<?= site_url('Ssshootingclub/payment_history/'.$persondata[0]->Per_id.'/'.$this->uri->segment(4)) ?>" class="btn btn-info btn-md">View Payment History</a>
                       </div>
-                      <div class="form-group  col-md-6">
-                          <a href="<?= site_url('ssshootingclub/membership_renewel/'.$persondata[0]->Per_id);?>" class="btn btn-info btn-md pull-right">Membership Renewal</a>
+                      <div class="form-group  col-md-2">
+                          <a href="<?= site_url('ssshootingclub/membership_renewel/'.$persondata[0]->Per_id.'/'.$this->uri->segment(4) );?>" class="btn btn-info btn-md">Membership Renewal</a>
                       </div>
-                       
+                      <div class="col-md-1">
+                        <a href="<?= site_url('Ssshootingclub/edit_membership/'.$persondata[0]->Per_id.'/'.$persondata[0]->m_id)?>" class="btn btn-md btn-info btn-block btnn">Edit</a>
+                      </div> 
                     </div>
                     </div>
 
@@ -116,22 +118,55 @@
                             <p><?=$persondata[0]->Per_address;?></p>
                       </div>
                     </div>
+
                     <div class="col-md-12">
                         <div class="form-group has-feedback col-md-6">
-			                     <label for="exampleInputEmail1">Image</label><div class="clearfix"></div>
-                            <img src="<?php echo site_url('uploads/members/'.$persondata[0]->m_image)?>" width="120" class="img-circle" height="80">           
+                          <label for="exampleInputEmail1">Weapon</label><br>
+                               <p><?= $persondata[0]->m_w_type; ?></p>  
                         </div>
-      <div class="form-group has-feedback col-md-6" style="height:106px">
-			    <label for="exampleInputEmail1">Weapon</label><br>
-			     <p><?= $persondata[0]->m_w_type; ?></p>    
-      </div>
-                    </div>
-		    <div class="col-md-12">
                         <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">Weapon Name / NO</label>
                            <p><?= $persondata[0]->m_no_w;?></p> 
-			</div>
-			<div class="form-group has-feedback col-md-6">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group has-feedback col-md-3">
+			                     <label for="exampleInputEmail1">Image</label><div class="clearfix"></div>
+                            <a href="<?php echo site_url('uploads/members/'.$persondata[0]->m_image)?>"  data-lighter >
+                            <img src="<?php echo site_url('uploads/members/'.$persondata[0]->m_image)?>" width="120" class="img-circle" height="80">           
+                            </a>
+                        </div>
+
+                        <div class="form-group has-feedback col-md-3">
+                           <label for="exampleInputEmail1">License Image</label><div class="clearfix"></div>
+                            <a href="<?php echo site_url('uploads/members/'.$persondata[0]->license_img)?>" data-lighter >                             
+                            <img src="<?php echo site_url('uploads/members/'.$persondata[0]->license_img)?>" width="120" class="img-circle" height="80">           
+                            </a>
+                        </div>
+                        
+
+                    			  <div class="form-group has-feedback col-md-3">
+                               <label for="exampleInputEmail1">NIC Image 1</label><div class="clearfix"></div>
+                                <a href="<?php echo site_url('uploads/members/'.$persondata[0]->m_nic_image1)?>" data-lighter >                             
+                                <img src="<?php echo site_url('uploads/members/'.$persondata[0]->m_nic_image1)?>" width="120" class="img-circle" height="80">           
+                                </a>
+                            </div>
+                            <div class="form-group has-feedback col-md-3">
+                               <label for="exampleInputEmail1">NIC Image 2</label><div class="clearfix"></div>
+                                <a href="<?php echo site_url('uploads/members/'.$persondata[0]->m_nic_image2)?>" data-lighter >
+                                <img src="<?php echo site_url('uploads/members/'.$persondata[0]->m_nic_image2)?>" width="120" class="img-circle" height="80">           
+                                </a>
+                            </div>   
+                          
+                    </div>
+		    <div class="col-md-12">
+                        <div class="form-group has-feedback col-md-6">
+                              <label for="exampleInputEmail1">Education</label>
+                              <p><?=$persondata[0]->m_education;?></p>  
+                          </div>
+                          
+			                   <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">Mobile No</label>
                             <p><?=$persondata[0]->Per_number;?></p>
                         </div>
@@ -196,11 +231,7 @@
          </div>    
 
         <div class="col-md-12">
-                        <div class="form-group has-feedback col-md-6">
-                          <label for="exampleInputEmail1">Education</label>
-                          <p><?=$persondata[0]->m_education;?></p>  
-                       </div>
-                      
+                        
                       <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">Current Employment</label>
                           <p><?php if($persondata){echo $persondata[0]->m_employment; }?></p>
@@ -208,14 +239,14 @@
                     
          </div>   
         <div class="col-md-12">
-                        <div class="form-group has-feedback col-md-6">
+                        <!-- <div class="form-group has-feedback col-md-6">
                            <label for="exampleInputEmail1">NIC Image 1</label><div class="clearfix"></div>
                             <img src="<?php echo site_url('uploads/members/'.$persondata[0]->m_nic_image1)?>" width="120" class="img-circle" height="80">           
                         </div>
                         <div class="form-group has-feedback col-md-6">
                            <label for="exampleInputEmail1">NIC Image 2</label><div class="clearfix"></div>
                             <img src="<?php echo site_url('uploads/members/'.$persondata[0]->m_nic_image2)?>" width="120" class="img-circle" height="80">           
-                        </div>
+                        </div> -->
         </div>                              
 		 
     <hr style="border: 1px solid #f2f2f2;">
@@ -225,16 +256,19 @@
     </div>
 		
  <div class="col-md-12">
-                        <div class="col-md-3">
+      <div class="col-md-3">
 			    <label>Name</label>
 			</div>
-                        <div class="col-md-3">
+      <div class="col-md-2">
 			    <label>CNIC</label>
 			</div>
-                        <div class="col-md-3">
-			    <label>Mobile</label>
-			</div>
-                        <div class="col-md-3">
+      <div class="col-md-2">
+          <label>Mobile</label>
+      </div>
+      <div class="col-md-2">
+          <label>Job/Buisness</label>
+      </div>
+        <div class="col-md-3">
 			    <label>Address</label>
 			</div>
  </div>
@@ -242,13 +276,17 @@
          <div class="form-group has-feedback col-md-3">
         <p><?php if(isset($emergency_data)){ echo $emergency_data[0]->Per_name; }?></p>                 
 			</div>
-			<div class="form-group has-feedback col-md-3">
+			<div class="form-group has-feedback col-md-2">
         <p><?php if(isset($emergency_data)){ echo $emergency_data[0]->Per_cnic; }?></p>
 			</div>
-       <div class="form-group has-feedback col-md-3">
+       <div class="form-group has-feedback col-md-2">
         <p><?php if(isset($emergency_data)){ echo $emergency_data[0]->Per_number; }?></p>          
 			</div>
-		
+
+  		<div class="form-group has-feedback col-md-2">
+          <p><?php if(isset($emergency_data)){ echo $emergency_data[0]->e_services; }?></p>          
+        </div>
+
 			<div class="form-group has-feedback col-md-3">
         <p><?php if(isset($emergency_data)){ echo $emergency_data[0]->Per_address; }?></p>
 			</div>
@@ -264,11 +302,14 @@
                         <div class="col-md-3">
           <label>Name</label>
       </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
           <label>CNIC</label>
       </div>
-                        <div class="col-md-3">
+      <div class="col-md-2">
           <label>Mobile</label>
+      </div>
+      <div class="col-md-2">
+          <label>Job/Buisness</label>
       </div>
                         <div class="col-md-3">
           <label>Address</label>
@@ -278,13 +319,16 @@
          <div class="form-group has-feedback col-md-3">
         <p><?php if(isset($refrence_data)){ echo $refrence_data[0]->Per_name; }?></p>                 
       </div>
-      <div class="form-group has-feedback col-md-3">
+      <div class="form-group has-feedback col-md-2">
         <p><?php if(isset($refrence_data)){ echo  $refrence_data[0]->Per_cnic; }?></p>
       </div>
-       <div class="form-group has-feedback col-md-3">
+       <div class="form-group has-feedback col-md-2">
         <p><?php if(isset($refrence_data)){ echo  $refrence_data[0]->Per_number; }?></p>          
       </div>
-    
+    <div class="form-group has-feedback col-md-2">
+        <p><?php if(isset($refrence_data)){ echo  $refrence_data[0]->ref_service; }?></p>          
+      </div>
+
       <div class="form-group has-feedback col-md-3">
         <p><?php if(isset($refrence_data)){ echo  $refrence_data[0]->Per_address; }?></p>
       </div>

@@ -1,9 +1,9 @@
 <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>
-      SSClub Dashboard
-      <small> <a href="<?= site_url()?>admin/">Home</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; <a href="<?= site_url()?>ssshootingclub/index">Ssshootingclub Section</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; Advance Membership Search Form &nbsp;&nbsp;&nbsp;</small>
+        <h1>
+          SSClub Dashboard
+          <small> <a href="<?= site_url()?>admin/">Home</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; <a href="<?= site_url()?>ssshootingclub/index">Ssshootingclub Section</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; Advance Membership Search Form &nbsp;&nbsp;&nbsp;</small>
         </h1>
         </section>
 
@@ -18,7 +18,7 @@
 			<div class="box-header">
               <a href="<?= site_url()?>Ssshootingclub/advance_all_members_search/" class="btn btn-default">Show All Members</a>
               </div>
-              <form method="post" action="<?= site_url()?>Ssshootingclub/advance_search_full/">
+              <form method="get" action="<?= site_url()?>Ssshootingclub/advance_search_full/">
               <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6 col-xs-offset-3">
                   <div class="form-group">

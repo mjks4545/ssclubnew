@@ -3,7 +3,7 @@
         <section class="content-header">
           <h1>
             SSclub Dashboard
-            <small> <a href="<?= site_url()?>admin/">Home</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; <a href="<?= site_url()?>showroom/index">Showroom Section</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<a href="<?=site_url()?>sale/">Sale Product Form</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; Sale Product Form </small>
+            <small> <a href="<?= site_url()?>admin/">Home</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; <a href="<?= site_url()?>showroom/index">Showroom Section</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<a href="<?=site_url()?>sale/index">Sale Product Form</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; Sale Product Form </small>
          </h1>
         </section>
      <!-- Main content -->
@@ -24,14 +24,14 @@
                              <div class="col-md-12">
                                  <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Name</label>
-                                     <input type="text" name="name" class="form-control" maxlength="50" minlength="1" value="<?php if(isset($search_data)){ echo $search_data[0]->Per_name;} ?>" placeholder="Name" required/>
-                                     <input type="hidden" name="per_id" value="<?php if(isset($search_data)){ echo $search_data[0]->Per_id;} ?>" placeholder="Name"/>
+                                     <input type="text" name="name" class="form-control" maxlength="50" value="<?php if(isset($search_data)){ echo trim($search_data[0]->Per_name);} ?>" required/>
+                                     <input type="hidden" name="per_id" value="<?php if(isset($search_data)){ echo $search_data[0]->Per_id;} ?>"/>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
 								 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Cnic</label>
-                                     <input type="text" name="cnic" class="form-control" maxlength="14" value="<?php if(isset($search_data)){ echo $search_data[0]->Per_cnic; } ?>" placeholder="Cnic" required/>
+                                     <input type="text" name="cnic" class="form-control" maxlength="14" value="<?php if(isset($search_data)){ echo trim($search_data[0]->Per_cnic); } ?>" required/>
                                      <input type="hidden" name="p_id" id="p_id" />
                                      <input type="hidden" name="par_price" id="par_price" />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
@@ -43,13 +43,13 @@
                              <div class="col-md-12">
                                 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Mobile</label>
-                                     <input type="text" name="number" pattern="(?=.*\d).{10,15}" class="form-control" value="<?php if(isset($search_data)){ echo $search_data[0]->Per_number;} ?>" placeholder="Mobile" required />
+                                     <input type="text" name="number" class="form-control" value="<?php if(isset($search_data)){ echo trim($search_data[0]->Per_number);} ?>" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
 								 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Address</label>
-                                     <input type="text" name="address"  maxlength="200" minlength="1"   class="form-control" value="<?php if(isset($search_data)){ echo  $search_data[0]->Per_address;} ?>" placeholder="Address" required />
+                                     <input type="text" name="address"  maxlength="200" class="form-control" value="<?php if(isset($search_data)){ echo trim($search_data[0]->Per_address);} ?>" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -57,15 +57,14 @@
 							  <div class="col-md-12">
                                 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Product</label>
-                                     <select type="text" name="product_name" id="product_main" class="form-control" minlength="1" maxlength="50" id="exampleInputEmail1" required>
-                                     <option>Select Option</option>
-                                        <option value="Acessories">Acessories</option>
-                                        <option value="Ammunition">Ammunition</option>
-                                        <option value="Pistol">Pistol</option>
-                                        <option value="Rifle">Rifle</option>
-                                        <option value="Shortgun">Shortgun</option>
-                                        <option value="Air Rifle">Air Rifle</option>
-                                     </select>
+                                     <select name="product_name" id="product_main" class="form-control">
+                                     <option value="">Select</option>
+                                     <?php 
+                                     if(isset($product)){
+                                        foreach ($product as  $value) {?>
+                                     <option value="<?= $value?>"><?= $value?></option>
+                                     <?php }}?>?>   
+                                    </select>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -89,7 +88,7 @@
 
                                 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Prd code</label>
-                                    <input type="text" name="pr_code"  class="form-control"  id="pr_code" placeholder="Product code" required />
+                                    <input type="text" name="pr_code"  class="form-control"  id="pr_code" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -99,16 +98,16 @@
 							<div class="col-md-12">
 							     <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">License Number</label>
-                                     <input type="text" name="l_no" minlength="1" maxlength="10"  class="form-control" value="<?php if(isset($search_data)){ echo $search_data[0]->Per_license_no; } ?>" placeholder="Enter license Number" required />
+                                     <input type="text" name="l_no" class="form-control" value="<?php if(isset($search_data)){ echo trim($search_data[0]->Per_license_no); } ?>" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
                                  <div class="form-group has-feedback col-md-6">
                                 <label for="exampleInputEmail1">Weapon Number</label>
                                   <div class="form-group has-feedback form-inline">
-                                    <input type="text" name="weapon_no_1" class="form-control"  id="weapon_no" placeholder="Weapon Number" style="width:90%" />
+                                    <input type="text" name="weapon_no_1" class="form-control"  id="weapon_no" style="width:90%" />
                                     <span class="add_field_span">
-                                    <button class="add_field_button btn-sm btn btn-info" style="width:8%"><i class="fa fa-plus"></i></button>
+                                    <button class="add_field_button btn-sm btn btn-info" style="width:8%" disabled=""><i class="fa fa-plus"></i></button>
                                     </span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                   </div>
@@ -118,14 +117,19 @@
 							 <div class="col-md-12">
                                 <div class="form-group has-feedback col-md-6">
                                      <label for="exampleInputEmail1">Membership</label>
-                                     <select type="text" name="membership" class="form-control" minlength="1" maxlength="50" id="exampleInputEmail1" required>
+                                     <select type="text" name="membership" class="form-control"  maxlength="50" id="exampleInputEmail1" required>
 									  <option>Select Membership</option>
-                                      <?php if(isset($search_data)){ ?>
+                                      <?php if(isset( $search_data[0]->m_type )){ ?>
 									  <option <?php if($search_data[0]->m_type=="Silver"){ echo "selected";} ?> value="Silver">Silver</option>
                                       <option <?php if($search_data[0]->m_type=="Gold"){ echo "selected";} ?> value="Gold">Gold</option>
                                       <option <?php if($search_data[0]->m_type=="Platinum"){ echo "selected";} ?> value="Platinum">Platinum</option>
                                       <option <?php if($search_data[0]->m_type=="WalkIn"){ echo "selected";} ?> value="WalkIn">Walk In</option>
-									<?php } ?>
+									<?php }else{ ?>
+                                      <option value="Silver">Silver</option>
+                                      <option value="Gold">Gold</option>
+                                      <option value="Platinum">Platinum</option>
+                                      <option value="WalkIn">Walk In</option>
+                                                                        <?php } ?>
                                      </select>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
@@ -135,13 +139,13 @@
 							<div class="col-md-12">
                                 <div class="form-group has-feedback col-md-2">
                                      <label for="exampleInputEmail1">Date</label>
-                                      <input type="date" name="sale_date" class="form-control" required />
+                                      <input type="date" name="sale_date" value="<?= date("Y-m-d")?>" class="form-control" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
 								 <div class="form-group has-feedback col-md-3">
                                      <label >Quantity</label>
-                                     <input type="text" name="quantity" id="quantity" minlength="1" maxlength="20"  class="form-control" placeholder="Quantity" required />
+                                     <input type="text" name="quantity" id="quantity"  maxlength="20"  class="form-control" required />
                                      <p style="color:green;display:none;" id="instock">In Stock</p>
                                      <p style="color:red;display:none;" id="outstock">Sorry out of stock</p>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
@@ -149,19 +153,19 @@
                                  </div>
 								 <div class="form-group has-feedback col-md-2">
                                      <label for="exampleInputEmail1">Rate</label>
-                                     <input type="text" name="rate" id="rate" minlength="1" maxlength="20"  class="form-control" id="exampleInputEmail1" placeholder="Rate" required />
+                                     <input type="text" name="rate" id="rate"  maxlength="20"  class="form-control" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
 								 <div class="form-group has-feedback col-md-2">
                                      <label for="exampleInputEmail1">Total</label>
-                                     <input type="text" name="total" id="total" pattern="(?=.*\d).{1,15}" minlength="1" maxlength="100"  class="form-control" id="exampleInputEmail1" placeholder="Total" required />
+                                     <input type="text" name="total" id="total" class="form-control"  required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
 								  <div class="form-group has-feedback col-md-3">
                                      <label for="">Details</label>
-                                     <input type="text" name="details" class="form-control" placeholder="Details" />
+                                     <input type="text" name="details" class="form-control" />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -194,13 +198,13 @@ $(function(){
 
  $("#product_main").change(function(){
      var prod_cat = this.value;
-       if(prod_cat =='Acessories' || prod_cat =='Ammunition' || prod_cat=='Air Rifle' )
+       if(prod_cat !='Pisol' || prod_cat !='Rifle' || prod_cat!='Shortgun' )
        {
-        $("#weapon_no").attr("disabled","");
-        $(".add_field_button").attr("disabled","");
+        $("#weapon_no").removeAttr("disabled","");
+        $(".add_field_button").removeAttr("disabled","");
        }else{
-        $("#weapon_no").removeAttr("disabled");
-        $(".add_field_button").removeAttr("disabled");
+        $("#weapon_no").attr("disabled",'');
+        $(".add_field_button").attr("disabled",'');
        }  
 
 
@@ -250,6 +254,7 @@ $("#prod_model").change(function(){
         data:{product:product,type:type,model:model},
         success:function( data )
         {
+            // alert(data.par_price);
           $("#par_price").val( data.par_price );
           $("#p_id").val( data.p_id );
           $("#pr_code").val(data.p_code);
@@ -270,13 +275,13 @@ $("#pr_code").keyup(function(){
         data:{code:code},
         success:function( data )
         {
-         if(data.p_name =='Acessories' || data.p_name =='Ammunition' || data.p_name=='Air Rifle' )
+         if(data.p_name =='Pisol' || data.p_name =='Rifle' || data.p_name=='Shortgun' )
             {
+            $("#weapon_no").removeAttr("disabled","");
+            $(".add_field_button").removeAttr("disabled","");
+           }else{
             $("#weapon_no").attr("disabled","");
             $(".add_field_button").attr("disabled","");
-           }else{
-            $("#weapon_no").removeAttr("disabled");
-            $(".add_field_button").removeAttr("disabled");
            }
 
             $("#par_price").val( data.par_price );
@@ -364,6 +369,10 @@ $(document).ready(function(){
         }
         });
     });
+});
+
+$(document).ready(function(){
+    
 });
 
 </script>

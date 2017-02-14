@@ -1,8 +1,8 @@
 
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <h1>
+    <section class="content-header">
+        <h1>
       SSClub Dashboard
       <small> <a href="<?= site_url()?>admin/">Home</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; <a href="<?= site_url()?>ssshootingclub/index">Ssshootingclub Section</a> &nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Booth Section &nbsp;&nbsp;&nbsp;</small>
         </h1>
@@ -29,8 +29,8 @@
             <?php }?>
 
         <?php foreach ($status_1 as $value) { ?>
+        <a href="<?php echo base_url('Ssshootingclub/person_detail/'.$value->per_id.'/'.$value->m_id.'/'.$value->c_id);?>" style="color:#fff;" >
          <div class="col-lg-3 col-xs-3">
-            
               <div class="small-box bg-red">
                 <div class="inner">
                   <h3><?= $value->bo_no?></h3>
@@ -42,7 +42,10 @@
                 <a href="<?php echo base_url('Ssshootingclub/person_detail/'.$value->per_id.'/'.$value->m_id.'/'.$value->c_id);?>" class="small-box-footer">Click for more info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
-            <?php }?>
+        </a>    
+            <?php 
+        }
+            ?>
            </div>
           
 

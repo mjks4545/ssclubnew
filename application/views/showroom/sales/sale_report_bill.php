@@ -1,4 +1,3 @@
-
 <style type="text/css">
 .gbi
 ll{
@@ -74,7 +73,7 @@ ll{
 						  <th>Remarks</th>
 						  <th><?= $persondata[0]->notes; ?></th>
 						  <th>Date:</th>
-						  <th><?= date('M-d-Y', strtotime($persondata[0]->s_date)); ?></th>
+						  <th><?= $persondata[0]->s_date; ?></th>
 						</tr>
 
 						</thead>
@@ -92,9 +91,9 @@ ll{
 							<table id="" class="table table-bordered table-striped">
 								<thead>
 									<tr>
-										<th>Qty</th>
 										<th>Particular</th>
 										<th>Weapon No</th>
+										<th>Qty</th>
 										<th>Rates</th>
 										<th>Amount</th>
 									</tr>
@@ -106,25 +105,26 @@ ll{
 									$rates =0;
 								 foreach($sale_data as $value) { ?>
 									<tr>
-										<td><?= $value->s_quantity;
-											$qnty = $qnty + $value->s_quantity; 
-										 ?></td>
 										<td><?= $value->p_type.' / '.$value->p_model; ?></td>
 										<td><?= $value->s_weapon_no; ?></td>
+										<td><?= $value->s_quantity;
+											$qnty = $qnty + $value->s_quantity; 
+										 ?>
+										</td>
 										<td><?= $value->s_price;
 											$rates = $rates+$value->s_price;
 										 ?></td>
-										<td><?= $value->s_total_price;
-										  $total_all = $total_all+ $value->s_total_price;
+										<td><?= $value->s_quantity * $value->s_price;
+										  $total_all += $value->s_quantity * $value->s_price;
 										 ?></td>
 									</tr>
 								<?php }?>
 								</tbody>
 								<tr>
-									<td>Total Qty:  <?= $qnty; ?></td>
+									<td></td>
 									<td></td><td></td>
-									<td>Total: <?= $rates; ?> </td>
-									<td>Total:   <?= $total_all; ?></td>
+									<td> </td>
+									<td><b></td>
 									<input type="hidden" name="qnty" value="<?= $qnty?>">
 									<input type="hidden" name="rate" value="<?= $rates?>">
 									<input type="hidden" name="amount" value="<?= $total_all?>">
@@ -154,35 +154,31 @@ ll{
 							<div class="row">
 								<div class="col-sm-4 pull-right">
 						  		<strong>Total:</strong>
-									<span style="font-size:14px;font-weight:bold;margin-left:15px"><?= $total_all?></span>
+									<span style="font-size:14px;font-weight:bold;margin-left:50px"><?= $total_all?></span>
 						  	</div>	
 							</div>
-						  <div class="row">
-						  	
-							<div class="col-sm-4 pull-right">
-							 <strong>% Extras:</strong>
-							 <?php if( isset($bill_data) ) { echo $bill_data[0]->bill_extra; } ?>	
-							<span style="font-size:14px;font-weight:bold;margin-left:5px">0</span>
-							</div>
-						  </div>
+						  
 						   <div class="row">
 							 <div class="col-sm-4 pull-right">
 							  <strong> % Sales tax: </strong>
-							  <?php if( isset($bill_data) ) { echo $bill_data[0]->bill_tax; } ?>
-							  <span style="font-size:14px;font-weight:bold;margin-left:5px">0</span>
+							  <span style="font-size:14px;font-weight:bold;margin-left:10px">
+							  <?php if( $bill_data ) { echo $bill_data[0]->bill_tax; } ?>
+							  </span>
 							 </div>
 						  </div>
 						   <div class="row">
 							 <div class="form-group col-sm-4 pull-right">
-							  <strong>Rectification:</strong>
-							  <?php if( isset($bill_data) ) { echo $bill_data[0]->b_rectification; } ?>
+							  <strong>Rectification:
+							  <?php if( $bill_data ) { echo $bill_data[0]->b_rectification; } ?>
+							  </strong>
 							 </div>
 						  	<input type="hidden" name="total" value="<?= $total_all; ?>">
 						  </div>
 						   <div class="row">
 							<div class="col-sm-4 pull-right">
-							 <strong>Grand Total:</strong>
-							<span><?php if( isset($bill_data) ) { echo $bill_data[0]->b_grandtotal; } ?></span>	
+							 <strong>Grand Total:
+							<span style="margin-left:7px"><?php if( $bill_data ) { echo $total_all; } ?></span>	
+							</strong>	
 							</div>
 						  </div>
 						  <br>

@@ -19,30 +19,36 @@ class Checkin_sale_m extends CI_Model
 	$wea_no = $this->input->post('weapon_no_1');
   	$p_id   = $this->input->post('p_id');
 	$qnty   = $this->input->post('quantity');
+	$p_qnty   = $this->input->post('quantity');
 	
-	if(isset($wea_no))
+	if( $wea_no != null  ) 
 	{
-		$qry_c1 = $this->db->query(" SELECT * FROM purchase where p_id = 7 AND p_quantity != 0 AND par_weapon_no ='$wea_no' ");
+		$qry_c1 = $this->db->query(" SELECT * FROM purchase where p_id = ".$p_id." AND p_quantity != 0 AND par_weapon_no ='$wea_no' ORDER BY par_date asc ");
 		$w_result_data = $qry_c1->result();	
-		// echo '<pre>';print_r($w_result_data);
 	}
 	else
 	{
-		$qry_c1 = $this->db->query(" SELECT * FROM purchase where p_id = ".$p_id." AND p_quantity > ".$qnty." LIMIT 1 ");
-		$result_data = $qry_c1->result();
+		$chk_rec  = $this->db->query(" SELECT * FROM purchase where p_id = ".$p_id." AND p_quantity != ".$qnty." ORDER BY par_date asc ");
+		$pr_res   = $chk_rec->result();
+		$par_id   = $pr_res[0]->par_id;
+		$par_qnty = $pr_res[0]->p_quantity;
+		if( $par_qnty > $qnty )
+		{
+			$pur_rec = $this->db->query(" SELECT * FROM `purchase` where p_id = ".$p_id." AND par_id = ".$par_id." ORDER BY purchase.par_date ");
+			$pur_rec = $pur_rec->result();
+		// echo '<pre>';print_r($pur_rec);die;
+		}else
+		{
+		$qry_c1 = $this->db->query(" SELECT * FROM purchase where p_id = ".$p_id." AND p_quantity != 0 ORDER BY par_date asc ");
+		$result_data = $qry_c1->result(); 
 		// echo '<pre>';print_r($result_data);die;
+		}	
 	}
-
-		if(isset($w_result_data))
+		if(isset($w_result_data)) 
 	  	{
-
 		  	if(empty($w_result_data))
 		  	{
-		  		echo 'No wea data';die;
-				/*$this->session->set_flashdata('msg','Sorry Product not found in stock');
-		      	$this->session->set_flashdata('type','danger');
-				redirect('sale/index');*/
-		  		// echo 'Sorry Product not found in stock';die;
+		  		echo 'No weapon found';die;
 		  	}
 		  	else
 		  	{
@@ -53,7 +59,6 @@ class Checkin_sale_m extends CI_Model
 		  		$update_pur = array(
 		  				'p_quantity'  => $new_total
 		  			);
-		  		// echo'<pre>';print_r($update_pur);
 		  		$this->db->where('par_id',$par_id);
 		  		$this->db->update('purchase',$update_pur);
 		  		// ---------- Update Product table -----------------//
@@ -89,77 +94,221 @@ class Checkin_sale_m extends CI_Model
 				return $per_id;	
 			}
 		}
+//------------------------------------------------------------------------------------
+	if( isset($pur_rec) && !empty($pur_rec) )
+	{
+			$database_qnty    = $pur_rec[0]->p_quantity;
+			$total_insertable = $database_qnty - $qnty;
+			$par_id           = $pur_rec[0]->par_id;
 
-		if(isset($result_data))
+			$pur_data = array(
+						'p_quantity'	=> $total_insertable
+				);
+			$this->db->where('par_id',$par_id);
+			$this->db->update('purchase',$pur_data);
+		// -----------------------------------------------------\
+		$sale_data = array(
+					'Per_id'	 	=> $this->input->post('per_id'),
+					'p_id'		 	=> $p_id,
+					's_weapon_no'	=>	'',
+					's_quantity' 	=> $qnty,
+					's_price'	 	=> $this->input->post('rate'),
+					'p_price'	 	=> $this->input->post('par_price'),
+					's_total_price' =>$this->input->post('total'),
+					'b_id'		 	=> 0,
+					'status'	 	=> 1,
+					's_date'	 	=> $this->input->post('sale_date'),
+					'notes'		 	=> $this->input->post('details'),
+					'trans_status'  => 1,
+					'par_id'	 	=> $par_id
+						);
+			$this->db->insert('sale',$sale_data);
+		//----------------------------------------------------------------
+		$this->db->where('p_id',$p_id);
+		  		$res = $this->db->get('product')->result();
+		  		$prod_qnty = $res[0]->p_quantity;
+		  		$new_qnty = $prod_qnty - $p_qnty; 
+		  		/*if($new_qnty > 0)
+		  		{*/			  			
+			  		$update_prod = array(
+			  				'p_quantity'	=> $new_qnty
+			  			);
+			  		// echo '<pre>';print_r($update_prod);	
+			  		$this->db->where('p_id',$p_id); 
+			  		$this->db->update('product',$update_prod);
+		//---------------------------------------------------------------
+			$prod_name = $this->input->post('product_name');
+					  	if($prod_name == 'Ammunition')
+					  	{
+					  		$no_fire = array(
+					  				'c_fire'=>$this->input->post('quantity')
+					  			);
+					  		$this->db->where('c_id',$c_id);
+					  		$this->db->update('checkin',$no_fire);
+					  	}	  		 
+
+	}
+	else if(isset($result_data))
+  	{
+
+	  	if(empty($result_data))
 	  	{
-
-		  	if(empty($result_data))
-		  	{
-		  		// echo '<pre>';print_r($result_data);die;
-		  		echo 'No data in stock';die;
-/*		  		$this->session->set_flashdata('msg','Sorry Product not found in stock');
-		      	$this->session->set_flashdata('type','danger');
-				redirect('sale/index');*/
-		  		// echo 'Sorry Product not found in stock';die;
+		  		$sale_data = array(
+							'Per_id'	 => $this->input->post('per_id'),
+							'p_id'		 => $p_id,
+							's_weapon_no'=>	'',
+							's_quantity' => $qnty,
+							's_price'	 => $this->input->post('rate'),
+							'p_price'	 => $this->input->post('par_price'),
+							's_total_price'=>$this->input->post('total'),
+							'b_id'		 => 0,
+							'status'	 => 1,
+							's_date'	 =>	$this->input->post('sale_date'),
+							'notes'		 => $this->input->post('details'),
+							'trans_status'=>1,
+							'par_id'	 => ''
+						);
+					$this->db->insert('sale',$sale_data);
 		  	}
 		  	else
 		  	{
-					
-			  		// ---------- Update Product table -----------------//
+		  		$data = [];
+		  		$var = count($result_data);
+
+		  		for ($i=0; $i <= $var; $i++) { 
+		  			
+		  			$value = $result_data[$i];
+
+		  			$par_id       = $value->par_id;
+			  		$old_all_qnty = $value->p_quantity;
+
+			  	if( $qnty == 0 ){
+			  		break;
+			  	}	
+			  		
+		  		if( $old_all_qnty <= $qnty && $old_all_qnty != 0 )
+		  		{
+			  		$qnty    = $qnty - $old_all_qnty;
+			  		$data[]  = $qnty;
+			  		$new_pur_data = array(
+						'p_quantity' => 0
+						);
+					$this->db->where('purchase.par_id',$par_id);
+				    $update_pur = $this->db->update('purchase',$new_pur_data);
+			// ----------------------------------------------------------------
+			 		$sale_data = array(
+							'Per_id'	 	=> $this->input->post('per_id'),
+							'p_id'		 	=> $p_id,
+							's_weapon_no'	=>	'',
+							's_quantity' 	=> $old_all_qnty,
+							's_price'	 	=> $this->input->post('rate'),
+							'p_price'	 	=> $this->input->post('par_price'),
+							's_total_price' =>$this->input->post('total'),
+							'b_id'		 	=> 0,
+							'status'	 	=> 1,
+							's_date'	 	=>	$this->input->post('sale_date'),
+							'notes'		 	=> $this->input->post('details'),
+							'trans_status'  =>1,
+							'par_id'	 	=> $par_id
+						);
+					// echo '<pre>';print_r($sale_data);die;
+					$this->db->insert('sale',$sale_data);
+		  		}
+		  		else if( $qnty != 0 && $old_all_qnty != 0 ) 
+		  		{
+		  			$old_all_qnty  =  $old_all_qnty - $qnty;
+		  			
+		  			$new_pur_data = array(
+						'p_quantity' => $old_all_qnty
+						);
+
+		  			$this->db->where('purchase.par_id',$par_id);
+				    $update_pur = $this->db->update('purchase',$new_pur_data);
+			// -------------------------------------------------------------------
+			 		$sale_data = array(
+							'Per_id'	 	=> $this->input->post('per_id'),
+							'p_id'		 	=> $p_id,
+							's_weapon_no'	=>	'',
+							's_quantity' 	=> $qnty,
+							's_price'	 	=> $this->input->post('rate'),
+							'p_price'	 	=> $this->input->post('par_price'),
+							's_total_price' =>$this->input->post('total'),
+							'b_id'		 	=> 0,
+							'status'	 	=> 1,
+							's_date'	 	=>	$this->input->post('sale_date'),
+							'notes'		 	=> $this->input->post('details'),
+							'trans_status'  =>1,
+							'par_id'	 	=> $par_id
+						);
+					// echo '<pre>';print_r($sale_data);die;
+					$this->db->insert('sale',$sale_data);
+
+					$qnty = 0;
+		  		}
+		  		else
+		  		{	
+		  			$sale_data = array(
+							'Per_id'	 	=> $this->input->post('per_id'),
+							'p_id'		 	=> $p_id,
+							's_weapon_no'	=>	'',
+							's_quantity' 	=> $qnty,
+							's_price'	 	=> $this->input->post('rate'),
+							'p_price'	 	=> $this->input->post('par_price'),
+							's_total_price' =>$this->input->post('total'),
+							'b_id'		 	=> 0,
+							'status'	 	=> 1,
+							's_date'	 	=>	$this->input->post('sale_date'),
+							'notes'		 	=> $this->input->post('details'),
+							'trans_status'  =>1,
+							'par_id'	 	=> ''
+						);
+					$this->db->insert('sale',$sale_data);
+
+		  		}
+
+		  	}	
+
+//---------------------------------- Insert Item to sale Table --------------------//
+		  	if( !empty($result_data) )
+			{
+				$this->db->where('p_id',$p_id);
+		  		$res = $this->db->get('product')->result();
+		  		$prod_qnty = $res[0]->p_quantity;
+		  		$new_qnty = $prod_qnty - $p_qnty; 
+		  		/*if($new_qnty > 0)
+		  		{*/			  			
+			  		$update_prod = array(
+			  				'p_quantity'	=> $new_qnty
+			  			);
+			  		// echo '<pre>';print_r($update_prod);	
 			  		$this->db->where('p_id',$p_id);
-			  		$res = $this->db->get('product')->result();
-			  		$prod_qnty = $res[0]->p_quantity;
-			  		$new_qnty = $prod_qnty - $qnty;
-			  		if($new_qnty > 0)
-			  		{			  			
-				  		$update_prod = array(
-				  				'p_quantity'	=> $new_qnty
-				  			);
-				  		// echo '<pre>';print_r($update_prod);	
-				  		$this->db->where('p_id',$p_id);
-				  		$this->db->update('product',$update_prod);
+			  		$this->db->update('product',$update_prod);
 
-				  		//---------- Update purchase value here -------------//
-					  	$old_qnty  = $result_data[0]->p_quantity;
-				  		$par_id    = $result_data[0]->par_id;
-				  		$new_total = $old_qnty - $qnty;
-				  		$update_pur = array(
-				  				'p_quantity'  => $new_total
+			//--------------------------------------------------------------------
+			  	$prod_name = $this->input->post('product_name');
+				  	if($prod_name == 'Ammunition')
+				  	{
+				  		$no_fire = array(
+				  				'c_fire'=>$this->input->post('quantity')
 				  			);
-				  			// echo'<pre>';print_r($update_pur);
-				  		$this->db->where('par_id',$par_id);
-				  		$this->db->update('purchase',$update_pur);
-
-					  	//-------------- Insert Item to sale Table -----------//
-					  		$sale_data = array(
-									'Per_id'	 => $per_id,
-									'p_id'		 => $p_id,
-									's_weapon_no'=>	'',
-									's_quantity' => $qnty,
-									's_price'	 => $this->input->post('rate'),
-									'p_price'	 => $this->input->post('par_price'),
-									's_total_price'=>$this->input->post('total'),
-									'b_id'		 => 0,
-									'status'	 => 1,
-									's_date'	 =>	$this->input->post('sale_date'),//date('Y-m-d'),
-									'notes'		 => $this->input->post('details'),
-									'trans_status'=>1,
-									'par_id'	 => $par_id,
-									'c_id'		 => $c_id	
-								);
-							// echo '<pre>';print_r($sale_data);die;
-							$this->db->insert('sale',$sale_data);	
-							return $per_id;
-			  		}	
-			  		else
+				  		$this->db->where('c_id',$c_id);
+				  		$this->db->update('checkin',$no_fire);
+				  	}	
+			//--------------------------------------------------------------------  						
+						return $per_id;
+			  		/*}*/
+			  	}
+/*			  		else
 			  		{
 			  			echo 'Not enought Product';die;
-			  		}
+			  		}*/
+
 			  			
 			}
-		}
+		
 
 
   }
 
+}
 }

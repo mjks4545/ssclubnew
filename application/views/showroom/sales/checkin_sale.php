@@ -28,42 +28,42 @@
                     <!-- form start -->
                     <div class="box-body">
                      <form method="post" action="<?= site_url('checkin_sale/insert_checkin_sale/'.$persondata[0]->Per_id.'/'.$this->uri->segment(3) );?>" >   
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table class="table table-bordered table-striped">
                             <tbody>
                             <thead>
                             <tr>
                                 <th>Name</th>
                                 <td>
-                                    <input type="text" name="name" value="<?= $persondata[0]->Per_name?>" class="form-control" placeholder="Enter Name" required>
+                                    <input type="text" name="name" value="<?= $persondata[0]->Per_name?>" class="form-control" required>
                                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                 </td>
                                 <th>NIC</th>
                                 <td>
-                                    <input type="text" name="mobile" value="<?= $persondata[0]->Per_cnic?>" class="form-control" placeholder="Enter Nic">
+                                    <input type="text" name="mobile" value="<?= $persondata[0]->Per_cnic?>" class="form-control">
                                 </td>
                              </tr>
                              <tr>   
                                 <th>Address</th>
                                 <td>
-                                    <input type="text" name="address" value="<?= $persondata[0]->Per_address?>" class="form-control" placeholder="Enter Address">
+                                    <input type="text" name="address" value="<?= $persondata[0]->Per_address?>" class="form-control" >
                                 </td>
                                 <th>Phone</th>
                                 <td>
-                                    <input type="text" name="number" class="form-control" value="<?= $persondata[0]->Per_number?>" placeholder="Enter Phone">
+                                    <input type="text" name="number" class="form-control" value="<?= $persondata[0]->Per_number?>" >
                                 </td>
                               </tr> 
                               <tr> 
                                 <th>Product</th>
                                 <td>
-                                    <select type="text" name="product_name" id="product_main" class="form-control" minlength="1" maxlength="50" id="exampleInputEmail1" required>
-                                        <option>Select Option</option>
-                                        <option value="Acessories">Acessories</option>
-                                        <option value="Ammunition">Ammunition</option>
-                                        <option value="Pistol">Pistol</option>
-                                        <option value="Rifle">Rifle</option>
-                                        <option value="Shortgun">Shortgun</option>
-                                        <option value="Air Rifle">Air Rifle</option>
+                                    <select type="text" name="product_name" id="product_main" class="form-control" required>
+                                        <option value="">Select</option>
+                                         <?php 
+                                         if(isset($product)){
+                                            foreach ($product as  $value) {?>
+                                         <option value="<?= $value?>"><?= $value?></option>
+                                         <?php }}?>?> 
+                                        
                                      </select>
                                 </td>
                                 <th>Product Type</th>
@@ -74,31 +74,33 @@
                                 </td>
                                </tr> 
                                <tr>
+                                
+                                <th>Weapon Number</th>
+                                <td>
+                                    <input type="text" name="weapon_no_1" class="form-control"  id="weapon_no" />
+                                </td>
                                 <th>Product Model</th>
                                 <td>
                                     <select name="prod_model" class="form-control" id="prod_model">
                                            <option>Select Type</option>
                                     </select>
                                 </td>
+                                </tr>
+                                <tr>
+                                <th>License No</th>
+                                <td>
+                                    <input type="text" name="l_no" value="<?= $persondata[0]->Per_license_no?>" class="form-control">
+                                </td>
                                 <th>Prod Code</th>
                                 <td>
-                                    <input type="text" name="pr_code"  class="form-control"  id="pr_code" placeholder="Product code" required />
+                                    <input type="text" name="pr_code"  class="form-control"  id="pr_code" required />
                                      <input type="hidden" name="p_id" id="p_id"/>
                                      <input type="hidden" name="par_price" id="par_price" />
                                      <input type="hidden" name="per_id" id="per_id" value="<?= $this->uri->segment(4);?>">
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                 </td>
-                                </tr>
-                                <tr>
-                                <th>License No</th>
-                                <td>
-                                    <input type="text" name="l_no" value="<?= $persondata[0]->Per_license_no?>" class="form-control" placeholder="Enter License No">
-                                </td>
-                                <th>Weapon Number</th>
-                                <td>
-                                    <input type="text" name="weapon_no_1" class="form-control"  id="weapon_no" placeholder="Weapon Number" required/>
-                                </td>
+                                
                                 </tr>
                                 <tr>
                                 <th>Membership</th>
@@ -115,33 +117,33 @@
                        <div class="col-md-12">
                                 <div class="form-group has-feedback col-md-2">
                                      <label for="exampleInputEmail1">Date</label>
-                                      <input type="date" name="sale_date" value="" class="form-control" required />
+                                      <input type="date" name="sale_date" value="<?= date('Y-m-d')?>" class="form-control" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
                                  <div class="form-group has-feedback col-md-3">
                                      <label >Quantity</label>
-                                     <input type="text" name="quantity" id="quantity" minlength="1" maxlength="20"  class="form-control" placeholder="Quantity" required />
-                                     <p style="color:green;display:none;" id="instock">In Stock</p>
-                                     <p style="color:red;display:none;" id="outstock">Sorry out of stock</p>
+                                     <input type="text" name="quantity" id="quantity" minlength="1" maxlength="20"  class="form-control" required />
+                                     <!-- <p style="color:green;display:none;" id="instock">In Stock</p>
+                                     <p style="color:red;display:none;" id="outstock">Sorry out of stock</p> -->
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
                                  <div class="form-group has-feedback col-md-2">
                                      <label for="exampleInputEmail1">Rate</label>
-                                     <input type="text" name="rate" id="rate" minlength="1" maxlength="20"  class="form-control" id="exampleInputEmail1" placeholder="Rate" required />
+                                     <input type="text" name="rate" id="rate" class="form-control" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
                                  <div class="form-group has-feedback col-md-2">
                                      <label for="exampleInputEmail1">Total</label>
-                                     <input type="text" name="total" id="total" pattern="(?=.*\d).{1,15}" minlength="1" maxlength="100"  class="form-control" id="exampleInputEmail1" placeholder="Total" required />
+                                     <input type="text" name="total" id="total" pattern="(?=.*\d).{1,15}" minlength="1" maxlength="100"  class="form-control" required />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
                                   <div class="form-group has-feedback col-md-3">
                                      <label for="exampleInputEmail1">Details</label>
-                                     <input type="text" name="details" class="form-control" placeholder="Details" />
+                                     <input type="text" name="details" class="form-control" />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -176,13 +178,13 @@ $(document).ready(function(){
 
  $("#product_main").change(function(){
      var prod_cat = this.value;
-       if(prod_cat =='Acessories' || prod_cat =='Ammunition' || prod_cat=='Air Rifle' )
+       if(prod_cat =='Pistol' || prod_cat =='Rifle' || prod_cat=='Shortgun' )
        {
-        $("#weapon_no").attr("disabled","");
-        $(".add_field_button").attr("disabled","");
+        $("#weapon_no").removeAttr("disabled","");
+        $(".add_field_button").removeAttr("disabled","");
        }else{
-        $("#weapon_no").removeAttr("disabled");
-        $(".add_field_button").removeAttr("disabled");
+        $("#weapon_no").attr("disabled");
+        $(".add_field_button").attr("disabled");
        }  
 
 
@@ -232,7 +234,8 @@ $("#prod_model").change(function(){
         data:{product:product,type:type,model:model},
         success:function( data )
         {
-          // $("#par_price").val( data.par_price );
+            // alert(data.par_price);exit;
+          $("#par_price").val( data.par_price );
           $("#p_id").val( data.p_id );
           $("#pr_code").val(data.p_code);
           $("#rate").val(data.sale_price);
@@ -254,13 +257,13 @@ $("#pr_code").keyup(function(){
         success:function( data )
         {
          // alert(data);
-         if(data.p_name =='Acessories' || data.p_name =='Ammunition' || data.p_name=='Air Rifle' )
+         if(data.p_name =='Pistol' || data.p_name =='Rifle' || data.p_name=='Shortgun' )
        {
+        $("#weapon_no").removeAttr("disabled","");
+        $(".add_field_button").removeAttr("disabled","");
+       }else{
         $("#weapon_no").attr("disabled","");
         $(".add_field_button").attr("disabled","");
-       }else{
-        $("#weapon_no").removeAttr("disabled");
-        $(".add_field_button").removeAttr("disabled");
        }
             $("#par_price").val( data.par_price );
             $("#p_id").val( data.p_id );    

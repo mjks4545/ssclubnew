@@ -20,7 +20,6 @@
     height: 50px!important;
 }  
 </style>
-
 <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -43,18 +42,18 @@
                   <a href="<?= site_url()?>ssshootingclub/checkin_search"class="pull-right"> Back</a>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form role="form" data-toggle="validator" action="<?=site_url()?>ssshootingclub/insert_new_checkin_data" method="post" enctype="multipart/form-data">
+                <form role="form" data-toggle="validator" action="<?=site_url()?>ssshootingclub/<?= ( isset( $data ) ) ? 'insert_new_checkin_data_w/' . $data[0]->Per_id : 'insert_new_checkin_data'; ?>" method="post" enctype="multipart/form-data">
                  <div class="box-body">
                     <div class="col-md-12">
                         <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">Name</label>
-                          <input type="text" name="new_name" class="form-control" maxlength="50" minlength="3" id="exampleInputEmail1" value="" required/>
+                          <input type="text" name="new_name" class="form-control" id="exampleInputEmail1" value="<?= ( isset( $data ) ) ? $data[0]->Per_name : '';  ?>" required/>
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
                       </div>
                       <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">Father Name</label>
-                          <input type="text" name="new_father_name" class="form-control" maxlength="50" minlength="1" id="exampleInputEmail1" value="" required/>
+                          <input type="text" name="new_father_name" class="form-control" id="exampleInputEmail1" value="" required/>
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
                       </div>
@@ -63,14 +62,13 @@
                     <div class="col-md-12">
                         <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">License NO</label>
-                          <input type="text" name="new_l_no"  class="form-control" maxlength="50" minlength="1" id="exampleInputEmail1"  value="" required/>
+                          <input type="text" name="new_l_no"  class="form-control" id="exampleInputEmail1"  value="" required/>
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
                       </div>
                       <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">Card No</label>
-                          <input type="text" name="new_c_no" class="form-control" 
-                          pattern="(?=.*\d).{1,}" maxlength="50" minlength="1" id="exampleInputEmail1" value=""  required/>
+                          <input type="text" name="new_c_no" class="form-control" value=""  required/>
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
                       </div>
@@ -78,81 +76,117 @@
                     <div class="col-md-12">
                       <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">Arrival Date</label>
-                          <input type="date" name="arr_date" class="form-control" maxlength="50" minlength="1" placeholder="Arrival Date" required />
+                          <input type="date" name="arr_date" value="<?= date('Y-m-d')?>" class="form-control" required />
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
                       </div>
                       <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">Arrival Time</label>
-                          <input type="time" name="new_a_t" class="form-control" maxlength="50" minlength="1" id="exampleInputEmail1" placeholder="Arrival Time" required value="<?=date("h:i:a");?>" />
+                          <input type="time" name="new_a_t" class="form-control" required value="<?= date("H:i");?>" />
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <div class="form-group has-feedback col-md-6">
-                          <label for="exampleInputEmail1">Departure Date</label>
-                          <input type="date" name="dep_date" class="form-control" maxlength="50" minlength="1" placeholder="Departure Date" required />
-                           <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                           <span class="help-block with-errors" style="margin-left:10px; "></span>
-                      </div>
+                        
                       <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">Departure Time</label>
-                          <input type="time" name="dep_time" class="form-control" maxlength="50" minlength="1" placeholder="Departure Time" required />
+                          <input type="time" name="dep_time" class="form-control" value="<?= date("H:i");?>"/>
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
                       </div>
+                      <div class="form-group has-feedback col-md-6">
+                          <label for="exampleInputEmail1">Mobile No</label>
+                          <input type="text" name="new_contact" class="form-control" value="<?= ( isset( $data ) ) ? $data[0]->Per_number : '';  ?>" required />
+                           <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                           <span class="help-block with-errors" style="margin-left:10px; "></span>
+                      </div> 
                     </div>
                     <div class="col-md-12">
                         <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">NIC NO</label>
-                          <input type="text" name="new_n_no" class="form-control" 
-                          pattern="(?=.*\d).{13,13}" maxlength="13" minlength="13" id="exampleInputEmail1" value=""   required/>
+                          <input type="text" name="new_n_no" class="form-control" value="<?= ( isset( $data ) ) ? $data[0]->Per_cnic : $nic_no;  ?>"   required/>
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
                       </div> 
                       <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">Address</label>
-                          <textarea name="new_address" class="form-control" maxlength="50" minlength="3" id="exampleInputEmail1"  required></textarea>
+                          <textarea name="new_address" class="form-control" id="exampleInputEmail1"  required><?= ( isset( $data ) ) ? $data[0]->Per_address : '';  ?></textarea>
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
                       </div>
                     </div>
                     <div class="col-md-12">
-                        <div class="form-group has-feedback col-md-6">
+                        <div class="form-group has-feedback col-md-3">
 			                     <label for="exampleInputEmail1">Image</label><div class="clearfix"></div>
-			                     <input type="file" name="img" class="form-control file-4" maxlength="50" placeholder="Upload Image" required >
+			                     <?php
+                                                if( isset( $data ) ){
+                                                    echo '<img width="120" src="' . site_url() . 'uploads/members/' . $data[0]->g_profile_img . '">';
+                                                }
+                                             ?>
+                                             <input type="file" name="img" class="form-control file-4" value="<?= ( isset( $data ) ) ? $data[0]->g_profile_img : '' ?>" required>                                   
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
-                
-                      </div>
-                      <div class="form-group has-feedback col-md-6">
-              			    <label for="exampleInputEmail1">Weapon</label><br>
-              			    <input name="new_weapon" id="optionsRadios1" value="self" checked="checked" type="radio" required/> &nbsp;&nbsp;&nbsp; Self &nbsp;&nbsp;&nbsp;
-              			    <input name="new_weapon" id="optionsRadios1" value="club" type="radio" required/> &nbsp;&nbsp;&nbsp; Club &nbsp;&nbsp;&nbsp;
-              			    <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-              			    <span class="help-block with-errors" style="margin-left:10px; "></span>
-                      </div>
+                       </div>
+
+                        <div class="form-group has-feedback col-md-3">
+                           <label for="exampleInputEmail1">License Image</label><div class="clearfix"></div>
+                           <input type="file" name="lic_img" class="form-control file-4" >
+                           <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                           <span class="help-block with-errors" style="margin-left:10px; "></span>
+                       </div>
+
+                        <div class="form-group has-feedback col-md-3">
+                            <div class="form-group">
+                            <label>NIC 1</label><br>
+                            <?php
+                                if( isset( $data ) ){
+                                    echo '<img width="120" src="' . site_url() . 'uploads/members/' . $data[0]->g_nic_1 . '">';
+                                }
+                             ?>
+                            <input name="p_nic_1" class="file-2" type="file" value="<?= ( isset( $data ) ) ? $data[0]->g_nic_1 : '' ?>" multiple=true >
+                            </div>
+                             <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                             <span class="help-block with-errors" style="margin-left:10px; "></span>
+                         </div> 
+                        <div class="form-group has-feedback col-md-3">
+                            <div class="form-group">
+                            <label>NIC 2</label><br>
+                            <?php
+                                if( isset( $data ) ){
+                                    echo '<img width="120" src="' . site_url() . 'uploads/members/' . $data[0]->g_nic_2 . '">';
+                                }
+                             ?>
+                            <input name="p_nic_2" class="file-3" type="file" value="<?= ( isset( $data ) ) ? $data[0]->g_nic_2 : '' ?>" multiple=true >
+                            </div>
+                             <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                             <span class="help-block with-errors" style="margin-left:10px; "></span>
+                         </div> 
+
                     </div>
 		          <div class="col-md-12">
+                      <div class="form-group has-feedback col-md-6">
+                        <label for="exampleInputEmail1">Weapon</label><br>
+                        <input name="new_weapon" id="optionsRadios1" value="self" type="radio" /> &nbsp;&nbsp;&nbsp; Self &nbsp;&nbsp;&nbsp;
+                        <input name="new_weapon" id="optionsRadios1" value="club" type="radio" /> &nbsp;&nbsp;&nbsp; Club &nbsp;&nbsp;&nbsp;
+                        <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                        <span class="help-block with-errors" style="margin-left:10px; "></span>
+                       </div>  
+
                         <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">Weapon Name / NO</label>
-                          <input type="text" name="new_w_no" class="form-control" maxlength="50" minlength="1" id="exampleInputEmail1" value="" required/>
+                          <input type="text" name="new_w_no" class="form-control" id="exampleInputEmail1" value="" required/>
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
 			                   </div>
-			               <div class="form-group has-feedback col-md-6">
-                          <label for="exampleInputEmail1">Mobile No</label>
-                          <input type="text" name="new_contact" maxlength="15"  pattern="(?=.*\d).{11,}" minlength="11" class="form-control" id="exampleInputEmail1"  value="" required />
-                           <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                           <span class="help-block with-errors" style="margin-left:10px; "></span>
-                      </div>
+                        
                 </div>
+
 		            <div class="col-md-12">
                 <div class="form-group has-feedback col-md-6">
                         <label for="exampleInputEmail1">MemberShip</label>
-                        <select name="membership" class="form-control" maxlength="50" minlength="1" placeholder="Select Membership" required>
-                          <option>Select Membership</option>
+                        <select name="membership" class="form-control" required>
+                          <option value="">Select Membership</option>
                           <option value="Silver">Silver</option>
                           <option value="Gold">Gold</option>
                           <option value="Platinum">Platinum</option>
@@ -160,39 +194,40 @@
                         </select>
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
-                      </div>
-                       
-                        <div class="form-group has-feedback col-md-6">
-                          <label for="exampleInputEmail1">No of Fire</label>
-                          <input type="text" name="new_no_fire" class="form-control" maxlength="50" minlength="3" id="exampleInputEmail1" value="" required/>
+                </div>
+                    
+                    <div class="form-group has-feedback col-md-6">
+                          <label for="exampleInputEmail1">Profession</label>
+                          <input type="text" name="new_proffession" class="form-control" id="exampleInputEmail1" value="" required />
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
-                      </div>
+                       </div>
+
                 </div>
                 <div class="col-md-12">
                       <div class="form-group has-feedback col-md-6">
                           <label for="exampleInputEmail1">Shooting Experience</label>
-                          <input type="text" name="new_s_e" class="form-control" maxlength="50" minlength="3" id="exampleInputEmail1" value=""  required />
-                           <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                           <span class="help-block with-errors" style="margin-left:10px; "></span>
-                      </div>
-                        <div class="form-group has-feedback col-md-6">
-                          <label for="exampleInputEmail1">Checkin Date</label>
-                          <input type="date" name="c_date" class="form-control" maxlength="50" placeholder="Enter Date" required />
-			                    <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
-                          <span class="help-block with-errors" style="margin-left:10px; "></span>
-			                 </div>
-                    </div>
-                <div class="col-md-12">
-                      <div class="form-group has-feedback col-md-6">
-                          <label for="exampleInputEmail1">Profession</label>
-                          <input type="text" name="new_proffession" class="form-control" maxlength="50" minlength="1" id="exampleInputEmail1" value="" required />
+                          <input type="text" name="new_s_e" class="form-control" id="exampleInputEmail1" value=""  required />
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
                       </div>
 
+                        <div class="form-group has-feedback col-md-6">
+                          <label for="exampleInputEmail1">No of Fire</label>
+                          <input type="text" name="new_no_fire" class="form-control" />
+                           <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                           <span class="help-block with-errors" style="margin-left:10px; "></span>
+                      </div>
+                        
+                    </div>
+                <div class="col-md-12">
+                      
+
                 </div>
-		    <div class="col-md-12">
+      <hr style="border:1px solid #f8f8f8;">   
+      <div class="clearfix"></div>
+       <div class="heading_class">
+        <div class="col-md-12">
                         <div class="col-md-3">
 			    <label>Booth Number</label>
 			</div>
@@ -205,10 +240,12 @@
                         <div class="col-md-3">
 			    <label>Remarks</label>
 			</div>
-                    </div>
+    </div>
+    </div>
+    <br>
 		    <div class="col-md-12">
                         <div class="form-group has-feedback col-md-3">
-                          <input type="text" name="new_booth_no" id="booth_no" class="form-control" maxlength="50" minlength="1" pattern="(?=.*\d).{1,}" id="exampleInputEmail1"   required />
+                          <input type="text" name="new_booth_no" id="booth_no" class="form-control" required />
     			                 <p style="color:green;display:none;" id="instock">Booth is empty</p>
                            <p style="color:red;display:none;" id="outstock">Booth already reserved</p>
                            <p style="color:red;display:none;" id="over_num_booth">Sorry this booth number is not available</p> 
@@ -216,28 +253,33 @@
                           <span class="help-block with-errors" style="margin-left:10px; "></span>
 			</div>
 			<div class="form-group has-feedback col-md-3">
-                          <input type="text" name="new_no_person" class="form-control"  maxlength="50" minlength="1" id="exampleInputEmail1" value=""  required />
+                          <input type="text" name="new_no_person" class="form-control" id="exampleInputEmail1" value=""  required />
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
 			</div>
                         <div class="form-group has-feedback col-md-3">
-                          <input type="text" name="new_range_charge" class="form-control" maxlength="50" minlength="1" id="exampleInputEmail1" value=""  required />
+                          <input type="text" name="new_range_charge" class="form-control" id="exampleInputEmail1" value=""  required />
 			  <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                           <span class="help-block with-errors" style="margin-left:10px; "></span>
 			</div>
 			<div class="form-group has-feedback col-md-3">
-                          <input type="text" name="new_remarks" class="form-control" id="exampleInputEmail1" value="" required/>
+                          <input type="text" name="new_remarks" class="form-control" id="exampleInputEmail1" value=""/>
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
 			</div>
-                    </div>
+</div>
+      
+      <hr style="border:1px solid #f8f8f8;margin-bottom:30px">
+      <div class="clearfix"></div>
+       <div class="heading_class">
+
 		    <div class="col-md-12">
          <div class="col-md-2">
-			    <label>Name</label>
-			</div>
+          <label>CNIC</label>
+			   </div>
         <div class="col-md-2">
-			    <label>CNIC</label>
-			</div>
+          <label>Name</label>
+			  </div>
        <div class="col-md-2">
 			    <label>Mobile</label>
 			</div>
@@ -254,44 +296,46 @@
           <label>NIC image 2</label>
       </div>
       </div>
+    </div>
+    <br>
 		   <div class="col-md-12">
           <div class="form-group has-feedback col-md-2">
-              <input type="text" name="new_nominated_name" class="form-control" maxlength="50" minlength="3" id="exampleInputEmail1" value="" required />
+              <input type="text" name="new_nominated_cnic" class="form-control" value="" id="c_nic1" />
               <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
               <span class="help-block with-errors" style="margin-left:10px; "></span>
   			 </div>
   			 <div class="form-group has-feedback col-md-2">
-              <input type="text" name="new_nominated_cnic" pattern="(?=.*\d).{13,16}" class="form-control" maxlength="16" minlength="13" id="exampleInputEmail1" value="" required />
+              <input type="text" name="new_nominated_name" class="form-control" id="c_name1" value="" />
                <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                <span class="help-block with-errors" style="margin-left:10px; "></span>
   			 </div>
            <div class="form-group has-feedback col-md-2">
-              <input type="text" name="new_nominated_mobile" pattern="(?=.*\d).{11,16}" class="form-control" maxlength="16" minlength="11" id="exampleInputEmail1" value="" required />
+              <input type="text" name="new_nominated_mobile" class="form-control" value="" id="c_mobile1" />
                <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
               <span class="help-block with-errors" style="margin-left:10px; "></span>
   			 </div>
   			 <div class="form-group has-feedback col-md-2">
-            <input type="text" name="new_nominated_address" class="form-control" id="exampleInputEmail1" value="" required/>
+            <input type="text" name="new_nominated_address" class="form-control" id="c_address1" value=""/>
              <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
              <span class="help-block with-errors" style="margin-left:10px; "></span>
   			 </div>
          <div class="form-group has-feedback col-md-2">
             <div class="form-group">
-              <input name="userfile_1" class="file-1" type="file" multiple=true required>
+              <input name="userfile_1" class="file-1" type="file" multiple=true >
             </div>
              <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
              <span class="help-block with-errors" style="margin-left:10px; "></span>
          </div>
         <div class="form-group has-feedback col-md-1">
             <div class="form-group">
-              <input name="g1_nic_1" class="file-2" type="file" multiple=true required>
+              <input name="g1_nic_1" class="file-2" type="file" multiple=true >
             </div>
              <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
              <span class="help-block with-errors" style="margin-left:10px; "></span>
          </div> 
         <div class="form-group has-feedback col-md-1">
             <div class="form-group">
-              <input name="g1_nic_2" class="file-3" type="file" multiple=true required>
+              <input name="g1_nic_2" class="file-3" type="file" multiple=true >
             </div>
              <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
              <span class="help-block with-errors" style="margin-left:10px; "></span>
@@ -299,43 +343,43 @@
       </div>
   	<div class="col-md-12">
             <div class="form-group has-feedback col-md-2">
-              <input type="text" name="new_nominated_1_name" class="form-control" maxlength="50" minlength="1" id="exampleInputEmail1"  required />
+            <input type="text" name="new_nominated_1_cnic" class="form-control" id="c_nic2" />
               <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
               <span class="help-block with-errors" style="margin-left:10px; "></span>
 			     </div>
 			<div class="form-group has-feedback col-md-2">
-          <input type="text" name="new_nominated_1_cnic" class="form-control" maxlength="13" minlength="13" pattern="(?=.*\d).{13,13}" id="exampleInputEmail1" required />
+          <input type="text" name="new_nominated_1_name" class="form-control" id="c_name2" />    
            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
            <span class="help-block with-errors" style="margin-left:10px; "></span>
 			</div>
         <div class="form-group has-feedback col-md-2">
-          <input type="text" name="new_nominated_1_mobile" class="form-control" maxlength="16" minlength="11" pattern="(?=.*\d).{11,16}" id="exampleInputEmail1"  required />
+          <input type="text" name="new_nominated_1_mobile" class="form-control" id="c_mobile2" />
            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
           <span class="help-block with-errors" style="margin-left:10px; "></span>
        </div>
 			<div class="form-group has-feedback col-md-2">
-        <input type="text" name="new_nominated_1_address" class="form-control" id="exampleInputEmail1"  required/>
+        <input type="text" name="new_nominated_1_address" class="form-control" id="c_address2" />
          <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
          <span class="help-block with-errors" style="margin-left:10px; "></span>
 			</div>
 
       <div class="form-group has-feedback col-md-2">
             <div class="form-group">
-              <input name="userfile_2" class="file-1" type="file" multiple=true required>
+              <input name="userfile_2" class="file-1" type="file" multiple=true>
             </div>
              <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
              <span class="help-block with-errors" style="margin-left:10px; "></span>
       </div>
         <div class="form-group has-feedback col-md-1">
             <div class="form-group">
-              <input name="g2_nic_1" class="file-2" type="file" multiple=true required>
+              <input name="g2_nic_1" class="file-2" type="file" multiple=true >
             </div>
              <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
              <span class="help-block with-errors" style="margin-left:10px; "></span>
          </div> 
         <div class="form-group has-feedback col-md-1">
             <div class="form-group">
-              <input name="g2_nic_2" class="file-3" type="file" multiple=true required>
+              <input name="g2_nic_2" class="file-3" type="file" multiple=true >
             </div>
              <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
              <span class="help-block with-errors" style="margin-left:10px; "></span>
@@ -345,42 +389,42 @@
 
 		    <div class="col-md-12">
                         <div class="form-group has-feedback col-md-2">
-                          <input type="text" name="new_nominated_2_name" class="form-control" maxlength="50" minlength="3" id="exampleInputEmail1" required />
-			  <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
+                          <input type="text" name="new_nominated_2_cnic" class="form-control" id="c_nic3" />
+			                     <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                           <span class="help-block with-errors" style="margin-left:10px; "></span>
 			</div>
 			<div class="form-group has-feedback col-md-2">
-                          <input type="text" name="new_nominated_2_cnic" class="form-control" maxlength="13" minlength="13" pattern="(?=.*\d).{13,13}" id="exampleInputEmail1" required />
+                          <input type="text" name="new_nominated_2_name" class="form-control" id="c_name3" />
                            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                            <span class="help-block with-errors" style="margin-left:10px; "></span>
 			</div>
                         <div class="form-group has-feedback col-md-2">
-                          <input type="text" name="new_nominated_2_mobile" class="form-control" pattern="(?=.*\d).{11,16}" maxlength="16" minlength="11" id="exampleInputEmail1"  required />
+                          <input type="text" name="new_nominated_2_mobile" class="form-control" id="c_mobile3" />
 			  <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                           <span class="help-block with-errors" style="margin-left:10px; "></span>
 			</div>
 			<div class="form-group has-feedback col-md-2">
-          <input type="text" name="new_nominated_2_address" class="form-control" id="exampleInputEmail1"  required/>
+          <input type="text" name="new_nominated_2_address" class="form-control" id="c_address3"  />
            <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
            <span class="help-block with-errors" style="margin-left:10px; "></span>
 			</div>
       <div class="form-group has-feedback col-md-2">
             <div class="form-group">
-              <input name="userfile_3" class="file-1" type="file" multiple=true required>
+              <input name="userfile_3" class="file-1" type="file" multiple=true >
             </div>
              <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
              <span class="help-block with-errors" style="margin-left:10px; "></span>
          </div>
         <div class="form-group has-feedback col-md-1">
             <div class="form-group">
-              <input name="g3_nic_1" class="file-2" type="file" multiple=true required>
+              <input name="g3_nic_1" class="file-2" type="file" multiple=true >
             </div>
              <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
              <span class="help-block with-errors" style="margin-left:10px; "></span>
          </div> 
         <div class="form-group has-feedback col-md-1">
             <div class="form-group">
-              <input name="g3_nic_2" class="file-3" type="file" multiple=true required>
+              <input name="g3_nic_2" class="file-3" type="file" multiple=true >
             </div>
              <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
              <span class="help-block with-errors" style="margin-left:10px; "></span>
@@ -390,7 +434,7 @@
 		     
                 </div><!-- /.box-body -->
                 <div class="box-footer">
-                  <button type="submit" class="btn btn-primary col-sm-1 pull-right ">Save  <div class="fa fa-angle-double-right"></div></button>
+                  <button type="submit" id="save_btn" class="btn btn-primary col-sm-1 pull-right ">Save  <div class="fa fa-angle-double-right"></div></button>
                 </div>
              </form>
           </div><!-- /.box -->
@@ -464,12 +508,43 @@ $(".file-3").fileinput({
 $(".file-4").fileinput({
     showUpload: false,
     showCaption: false,
-    browseClass: "btn btn-primary btn-md",
+    browseClass: "btn btn-primary btn-xs",
     fileType: "any",
         previewFileIcon: "<i class='glyphicon glyphicon-king'></i>"
   });
 
-
+$("#c_nic1").keyup(function (){
+        var $val = $(this).val();
+        var $url = 'http://sstechnologiez.com/ssclub/ssshootingclub/get_guest_cnic';
+        $.post( $url, { cnic : $val }, function(data){
+            console.log( data.Per_name );
+            $('#c_name1').val(data.Per_name);
+            $('#c_mobile1').val(data.Per_number);
+            $('#c_address1').val(data.Per_address);
+        } );
+    });
+    
+    $("#c_nic2").keyup(function (){
+        var $val = $(this).val();
+        var $url = 'http://sstechnologiez.com/ssclub/ssshootingclub/get_guest_cnic';
+        $.post( $url, { cnic : $val }, function(data){
+            console.log( data.Per_name );
+            $('#c_name2').val(data.Per_name);
+            $('#c_mobile2').val(data.Per_number);
+            $('#c_address2').val(data.Per_address);
+        } );
+    });
+    
+    $("#c_nic3").keyup(function (){
+        var $val = $(this).val();
+        var $url = 'http://sstechnologiez.com/ssclub/ssshootingclub/get_guest_cnic';
+        $.post( $url, { cnic : $val }, function(data){
+            console.log( data.Per_name );
+            $('#c_name3').val(data.Per_name);
+            $('#c_mobile3').val(data.Per_number);
+            $('#c_address3').val(data.Per_address);
+        } );
+    });
 
 
 </script>              

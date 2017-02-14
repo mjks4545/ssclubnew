@@ -20,12 +20,12 @@
                          <a href="<?= site_url()?>customer/" class="pull-right"> Back</a>
                      </div><!-- /.box-header -->
                      <!-- form start -->
-                     <form role="form" data-toggle="validator" action="<?= site_url()?>purchase_reports/purchase_reports_search" method="post">
+                     <form role="form" data-toggle="validator" action="<?= site_url()?>purchase_reports/purchase_reports_search" method="get">
                          <div class="box-body">
                              <div class="col-md-6 col-sm-offset-3">
                                   <div class="form-group has-feedback">
                                      <label for="exampleInputEmail1">Name</label>
-                                      <input type="text" name="name"  class="form-control"  id="exampleInputEmail1" placeholder=""  required/>
+                                      <input type="text" name="name"  class="form-control"  id="purchase_name_search" placeholder="" />
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>
                                  </div>
@@ -33,7 +33,7 @@
 								 <div class="col-md-6 col-sm-offset-3">
                                   <div class="form-group has-feedback">
                                      <label for="exampleInputEmail1">Cnic</label>
-                                    <input type="text" name="cnic"  class="form-control"  id="exampleInputEmail1" placeholder="" maxlength="13" minlength="13" pattern="(?=.*\d).{13,}">
+                                    <input type="text" name="cnic"  class="form-control"  id="exampleInputEmail1" placeholder="" >
                                     
                                  </div>
 						        </div>
@@ -68,15 +68,14 @@
 								
                                 <div class="col-md-6 col-sm-offset-3">
                                   <div class="form-group has-feedback">
-                                     <label for="exampleInputEmail1">Product</label>
-                                     <select type="text" name="product_name" id="product_main" class="form-control" minlength="1" maxlength="50" id="exampleInputEmail1">
-                                     <option value="">Select Product</option>
-                                        <option value="Acessories">Acessories</option>
-                                        <option value="Ammunition">Ammunition</option>
-                                        <option value="Pistol">Pistol</option>
-                                        <option value="Rifle">Rifle</option>
-                                        <option value="Shortgun">Shortgun</option>
-                                        <option value="Air Rifle">Air Rifle</option>
+                                     <label>Product</label>
+                                    <select name="product_name" id="product_main" class="form-control">
+                                     <option value="">Select</option>
+                                     <?php 
+                                     if(isset($product)){
+                                        foreach ($product as  $value) {?>
+                                     <option value="<?= $value?>"><?= $value?></option>
+                                     <?php }}?>?>   
                                      </select>
                                      <span class="glyphicon form-control-feedback" aria-hidden="true" style="margin-right: 20px;"></span>
                                      <span class="help-block with-errors" style="margin-left:10px; "></span>

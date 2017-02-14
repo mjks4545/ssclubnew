@@ -21,7 +21,9 @@
                         <div class="col-lg-1 col-xs-4"></div>
                         <div class="col-lg-3 col-xs-6">
                             <!-- small box -->
+                          <a href="<?= site_url()?>ssshootingclub/checkin_search" style="color:#fff;">
                             <div class="small-box bg-aqua">
+                            <br>
                                 <div class="inner">
                                     <h3>Check IN</h3>
                                     <p>Check In People From here</p>
@@ -33,10 +35,13 @@
                                     Click here  <i class="fa fa-arrow-circle-right"></i>
                                 </a>
                             </div>
+                            </a>
                         </div><!-- ./col -->
+                         <a href="<?= site_url()?>Ssshootingclub/booths/" style="color:#fff">
                         <div class="col-lg-3 col-xs-6">
                             <!-- small box -->
                             <div class="small-box bg-yellow">
+                            <br>
                                 <div class="inner">
                                     <h3>Booths</h3>
                                     <p>Click To Enter Booths</p>
@@ -49,9 +54,12 @@
                                 </a>
                             </div>
                         </div><!-- ./col -->
+                        </a>
+                        <a href="<?= site_url()?>Ssshootingclub/membership_add/" style="color:#fff;">
                         <div class="col-lg-3 col-xs-6">
                             <!-- small box -->
                             <div class="small-box bg-green">
+                            <br>
                                 <div class="inner">
                                     <h3>Membership</h3>
                                     <p>Click To VIew membership Form</p>
@@ -64,12 +72,15 @@
                                 </a>
                             </div>
                         </div><!-- ./col -->
+                       </a> 
                     </div><!-- /.row -->
                     <div class="row">
                         <div class="col-lg-1 col-xs-4"></div>
                         <div class="col-lg-3 col-xs-6">
                             <!-- small box -->
+                            <a href="<?= site_url()?>Ssshootingclub/searchmemeber/" style="color:#fff">
                             <div class="small-box" style="background:#76d6c0;">
+                            <br>
                                 <div class="inner">
                                     <h3>Member Search</h3>
                                     <p>Click To Search Members</p>
@@ -82,9 +93,12 @@
                                 </a>
                             </div>
                         </div><!-- ./col -->
+                        </a>
                         <div class="col-lg-3 col-xs-6">
                             <!-- small box -->
+                           <a href="<?= site_url()?>Ssshootingclub/advancesearch/" style="color:#fff"> 
                             <div class="small-box bg-maroon">
+                            <br>
                                 <div class="inner">
                                     <h3>Advance Search</h3>
                                     <p>Click To Advance Search</p>
@@ -97,6 +111,7 @@
                                 </a>
                             </div>
                         </div><!-- ./col -->
+                        </a>
                         <div class="col-lg-3 col-xs-6">
                             <!-- small box -->
                             

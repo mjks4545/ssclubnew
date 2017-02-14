@@ -18,7 +18,7 @@
 			  <div class="box-header">
               <a href="<?= site_url()?>Ssshootingclub/searchallmember/" type="button" name="button" class="btn btn-default" value="">Show All Numbers</a>
               </div>
-          <form method="post" action="<?= site_url()?>Ssshootingclub/searchmembertable2/">
+          <form method="get" action="<?= site_url()?>Ssshootingclub/searchmembertable2/">
               <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6 col-xs-offset-3">
                   <div class="form-group">
@@ -45,6 +45,7 @@
           						<option value="">Select Membership</option>
           						<option value="gold">Gold</option>
           						<option value="silver">silver</option>
+                      <option value="platinum">Platinum</option>
                       <option value="walkin">Walkin</option>
         					</select>
                   </div><!-- /.form-group -->
